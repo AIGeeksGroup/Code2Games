@@ -22,7 +22,7 @@ from staging_paths import get_demo_name, get_staging_root
 
 PROJECT_ROOT = Path(
     os.environ.get("CODE2WORLDS_ROOT")
-    or Path(__file__).resolve().parents[3]
+    or Path(__file__).resolve().parents[2]
 )
 STAGING_ROOT = Path(get_staging_root(PROJECT_ROOT))
 DEFAULT_ASSET_PLAN = STAGING_ROOT / "asset_realization/asset_plan.json"

@@ -28,7 +28,7 @@ from staging_paths import (
 )
 
 
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 PACKET_DIR = get_packet_dir(PROJECT_ROOT)
 OUTPUT_DIR = os.path.join(STAGING_ROOT, "asset_realization")

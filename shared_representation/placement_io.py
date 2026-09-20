@@ -11,7 +11,7 @@ from staging_paths import get_packet_dir, get_staging_root
 
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 PACKET_DIR = get_packet_dir(PROJECT_ROOT)
 

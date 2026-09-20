@@ -27,7 +27,7 @@ if COMMON_DIR not in sys.path:
 from staging_paths import get_demo_name, get_packet_dir, get_staging_root
 from placement_constraints import CLIFF_NORMAL_MAX_ABS_Z, validate_realized_footprint_support
 
-PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, "..", "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, "..", ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 PACKET_DIR = get_packet_dir(PROJECT_ROOT)
 DEFAULT_SCENE = os.path.join(PROJECT_ROOT, "infinigen", "outputs", "game_scene", "fine", "scene.blend")

@@ -20,7 +20,7 @@ if COMMON_DIR not in sys.path:
 from staging_paths import get_packet_dir, get_staging_root
 
 
-PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 DEFAULT_PLACEMENT_PLAN = os.path.join(get_packet_dir(PROJECT_ROOT), "gameplay_placement_plan.json")
 DEFAULT_ASSET_PLAN = os.path.join(STAGING_ROOT, "asset_realization", "asset_plan.json")

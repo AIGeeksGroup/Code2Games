@@ -15,7 +15,7 @@ if COMMON_DIR not in sys.path:
 from staging_paths import get_demo_name, get_staging_root
 
 
-PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 SCENE_BLEND = os.path.join(STAGING_ROOT, "staged_scene.blend")
 DIRECTOR_PATH_JSON = os.path.join(STAGING_ROOT, "director_path", "director_path.json")

@@ -7,14 +7,12 @@
 !/README.md
 !/requirements.txt
 
-!/agent/
-!/agent/__init__.py
-!/agent/shared_representation/
-!/agent/shared_representation/**
-!/agent/scene_and_gameplay_planning/
-!/agent/scene_and_gameplay_planning/**
-!/agent/game_realization/
-!/agent/game_realization/**
-!/agent/gameplay_logic/
-!/agent/gameplay_logic/**
-agent/**/__pycache__/
+!/shared_representation/
+!/shared_representation/**
+!/scene_and_gameplay_planning/
+!/scene_and_gameplay_planning/**
+!/game_realization/
+!/game_realization/**
+!/gameplay_logic/
+!/gameplay_logic/**
+**/__pycache__/
