@@ -18,14 +18,14 @@ from staging_paths import get_demo_name, get_staging_root
 PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 SCENE_BLEND = os.path.join(STAGING_ROOT, "staged_scene.blend")
-DIRECTOR_PATH_JSON = os.path.join(STAGING_ROOT, "director_path", "director_path.json")
-OUTPUT_DIR = os.path.join(STAGING_ROOT, "director_gameplay")
+SHOWCASE_ROUTE_JSON = os.path.join(STAGING_ROOT, "showcase_route", "showcase_route.json")
+OUTPUT_DIR = os.path.join(STAGING_ROOT, "visual_showcase")
 FRAME_DIR = os.path.join(OUTPUT_DIR, "frames")
-OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "staged_director_gameplay.blend")
-OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "director_gameplay_report.json")
-OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "director_gameplay.mp4")
-DEFAULT_NPC_FBX = os.path.join(PROJECT_ROOT, "assets", "mixamo", "mixamo_run.fbx")
-COLLECTION_NAME = "Code2Games_Director_Gameplay"
+OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "visual_showcase.blend")
+OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "visual_showcase_report.json")
+OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "visual_showcase.mp4")
+COLLECTION_NAME = "Code2Games_Visual_Showcase"
+NPC_ROOT_MARKER = "code2games_gameplay_npc_root"
 UP = mathutils.Vector((0.0, 0.0, 1.0))
 FPS = 24
 FRAME_START = 1
@@ -34,13 +34,13 @@ FRAME_END = 192
 
 def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    parser = argparse.ArgumentParser(description="Stage an NPC and follow camera on the fixed gameplay route")
+    parser = argparse.ArgumentParser(description="Animate the staged NPC and create an optional visual showcase")
     parser.add_argument("--scene_blend", default=SCENE_BLEND)
-    parser.add_argument("--director_path", default=DIRECTOR_PATH_JSON)
+    parser.add_argument("--showcase_route", default=SHOWCASE_ROUTE_JSON)
     parser.add_argument("--output_dir", default=OUTPUT_DIR)
-    parser.add_argument("--npc_fbx", default=DEFAULT_NPC_FBX)
-    parser.add_argument("--npc_height_m", type=float, default=1.7)
-    parser.add_argument("--npc_yaw_offset_degrees", type=float, default=90.0)
+    parser.add_argument("--npc_object", default="", help="optional name of a pre-staged NPC root")
+    parser.add_argument("--npc_height_m", type=float, default=None)
+    parser.add_argument("--npc_yaw_offset_degrees", type=float, default=None)
     parser.add_argument("--actor_radius_m", type=float, default=0.42)
     parser.add_argument("--ground_clearance_m", type=float, default=0.01)
     parser.add_argument("--maximum_ground_step_m", type=float, default=0.85)
@@ -85,7 +85,7 @@ def clear_old_preview_frames():
     if not os.path.isdir(FRAME_DIR):
         return
     for name in os.listdir(FRAME_DIR):
-        if name.startswith("director_gameplay_frame_") and name.lower().endswith(".png"):
+        if name.startswith("visual_showcase_frame_") and name.lower().endswith(".png"):
             os.remove(os.path.join(FRAME_DIR, name))
 
 
@@ -220,6 +220,33 @@ def get_or_reset_collection(name=COLLECTION_NAME):
     return collection
 
 
+def find_staged_npc(object_name=""):
+    """Return the NPC already embedded in the gaming-world Blend.
+
+    NPC import and static placement belong to game realization.  The visual
+    showcase must never silently create a second character or alter the
+    gaming-world contract.
+    """
+    if object_name:
+        obj = bpy.data.objects.get(object_name)
+        if obj is None:
+            raise RuntimeError(f"pre-staged NPC object not found: {object_name}")
+        if not bool(obj.get(NPC_ROOT_MARKER)):
+            raise RuntimeError(f"object is not a Code2Games staged NPC root: {object_name}")
+        return obj
+
+    matches = [obj for obj in bpy.context.scene.objects if bool(obj.get(NPC_ROOT_MARKER))]
+    if not matches:
+        raise RuntimeError(
+            "staged_scene.blend contains no gameplay NPC; run "
+            "scripts/generate_gaming_world.sh with an animated NPC FBX first"
+        )
+    if len(matches) > 1:
+        names = ", ".join(sorted(obj.name for obj in matches))
+        raise RuntimeError(f"multiple staged NPC roots found ({names}); select one with --npc_object")
+    return matches[0]
+
+
 def link_to_collection(obj, collection):
     if obj.name not in collection.objects.keys():
         collection.objects.link(obj)
@@ -312,7 +339,7 @@ def frame_for_beat(index, beat_count):
 def parse_beats(path_data):
     beats = path_data.get("beats")
     if not isinstance(beats, list) or len(beats) < 2:
-        raise ValueError("director_path.json must contain at least two beats")
+        raise ValueError("showcase_route.json must contain at least two beats")
     parsed = []
     for beat in beats:
         parsed.append({
@@ -1087,20 +1114,6 @@ def mesh_world_bounds(meshes):
     return minimum, maximum, maximum - minimum
 
 
-def imported_top_level_objects(imported):
-    imported_set = set(imported)
-    return [obj for obj in imported if obj.parent not in imported_set]
-
-
-def make_action_cyclic(obj):
-    if not obj.animation_data or not obj.animation_data.action:
-        return
-    for fcurve in obj.animation_data.action.fcurves:
-        cycles = fcurve.modifiers.new(type="CYCLES")
-        cycles.mode_before = "REPEAT"
-        cycles.mode_after = "REPEAT"
-
-
 def normalize_rotation_curve_winding(obj):
     """Force quaternion keys onto the shortest interpolation path.
 
@@ -1138,68 +1151,6 @@ def normalize_rotation_curve_winding(obj):
             for channel in range(4):
                 by_channel[channel][frame].co[1] = quaternion[channel]
         reference = quaternion
-
-
-def import_mixamo_character(collection, fbx_path, target_height, start_position):
-    if not os.path.isfile(fbx_path):
-        raise FileNotFoundError(f"Mixamo NPC FBX not found: {fbx_path}")
-
-    before = set(bpy.data.objects)
-    bpy.ops.import_scene.fbx(filepath=fbx_path)
-    imported = [obj for obj in bpy.data.objects if obj not in before]
-    armatures = [obj for obj in imported if obj.type == "ARMATURE"]
-    meshes = [obj for obj in imported if obj.type == "MESH"]
-    if not armatures:
-        raise RuntimeError(f"Mixamo FBX contains no armature: {fbx_path}")
-    if not meshes:
-        raise RuntimeError(f"Mixamo FBX contains no skinned mesh: {fbx_path}")
-
-    root = bpy.data.objects.new("Director_Player_Mixamo_Root", None)
-    root.empty_display_type = "PLAIN_AXES"
-    root.empty_display_size = 0.6
-    collection.objects.link(root)
-    for obj in imported:
-        link_to_collection(obj, collection)
-
-    armature = armatures[0]
-    armature.name = "Director_Player_Mixamo_Armature"
-    for index, mesh in enumerate(meshes, start=1):
-        mesh.name = f"Director_Player_Mixamo_Mesh_{index:02d}"
-
-    bpy.context.view_layer.update()
-    _minimum, _maximum, size = mesh_world_bounds(meshes)
-    if size.z <= 1e-5:
-        raise RuntimeError("Mixamo character has a degenerate height")
-    scale_factor = float(target_height) / float(size.z)
-    top_level = imported_top_level_objects(imported)
-    for obj in top_level:
-        obj.scale = obj.scale * scale_factor
-    bpy.context.view_layer.update()
-
-    minimum, maximum, _size = mesh_world_bounds(meshes)
-    foot_center = mathutils.Vector(((minimum.x + maximum.x) * 0.5, (minimum.y + maximum.y) * 0.5, minimum.z))
-    for obj in top_level:
-        # Bounds are in world space, so remove the foot offset in world space
-        # too. Subtracting it from a rotated/scaled object's local location is
-        # the old source of scene-dependent hovering and sinking.
-        world_matrix = obj.matrix_world.copy()
-        world_matrix.translation -= foot_center
-        obj.matrix_world = world_matrix
-    bpy.context.view_layer.update()
-
-    for obj in top_level:
-        world_matrix = obj.matrix_world.copy()
-        obj.parent = root
-        obj.matrix_world = world_matrix
-    root.location = start_position
-    for obj in armatures:
-        make_action_cyclic(obj)
-
-    root["source_fbx"] = fbx_path
-    root["target_height_m"] = float(target_height)
-    root["mixamo_armature"] = armature.name
-    root["mixamo_mesh_count"] = len(meshes)
-    return root
 
 
 def configure_distance_synchronized_animation(root, beats, fps, actor_height):
@@ -1952,7 +1903,7 @@ def render_frame_previews(camera):
         FRAME_END,
     })
     for frame in preview_frames:
-        path = os.path.join(FRAME_DIR, f"director_gameplay_frame_{frame:04d}.png")
+        path = os.path.join(FRAME_DIR, f"visual_showcase_frame_{frame:04d}.png")
         bpy.context.scene.frame_set(frame)
         configure_render_for_stills(path, camera)
         log("RENDER_GAMEPLAY_FRAME", path)
@@ -1986,26 +1937,25 @@ def configure_render_for_video(video_samples):
 
 def render_video(video_samples):
     configure_render_for_video(video_samples)
-    log("RENDER_GAMEPLAY_VIDEO", OUTPUT_MP4)
+    log("RENDER_VISUAL_SHOWCASE", OUTPUT_MP4)
     bpy.ops.render.render(animation=True)
 
 
 def main():
-    global SCENE_BLEND, DIRECTOR_PATH_JSON, OUTPUT_DIR, FRAME_DIR
+    global SCENE_BLEND, SHOWCASE_ROUTE_JSON, OUTPUT_DIR, FRAME_DIR
     global OUTPUT_BLEND, OUTPUT_REPORT, OUTPUT_MP4, FPS, FRAME_START, FRAME_END
 
     args = parse_args()
     SCENE_BLEND = project_path(args.scene_blend)
-    DIRECTOR_PATH_JSON = project_path(args.director_path)
+    SHOWCASE_ROUTE_JSON = project_path(args.showcase_route)
     OUTPUT_DIR = project_path(args.output_dir)
     FRAME_DIR = os.path.join(OUTPUT_DIR, "frames")
-    OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "staged_director_gameplay.blend")
-    OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "director_gameplay_report.json")
-    OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "director_gameplay.mp4")
-    npc_fbx = project_path(args.npc_fbx)
+    OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "visual_showcase.blend")
+    OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "visual_showcase_report.json")
+    OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "visual_showcase.mp4")
     if min(
-        args.npc_height_m, args.actor_radius_m, args.maximum_ground_step_m,
-        args.maximum_slope_degrees, args.maximum_collision_detour_m,
+        args.actor_radius_m, args.maximum_ground_step_m, args.maximum_slope_degrees,
+        args.maximum_collision_detour_m,
         args.camera_collision_radius_m, args.camera_min_ground_clearance_m,
     ) <= 0.0:
         raise ValueError("physical actor, terrain, detour, and camera limits must be positive")
@@ -2016,18 +1966,18 @@ def main():
         "ok": False,
         "demo_name": get_demo_name() or None,
         "scene_blend": SCENE_BLEND,
-        "director_path_json": DIRECTOR_PATH_JSON,
+        "showcase_route_json": SHOWCASE_ROUTE_JSON,
         "output_dir": OUTPUT_DIR,
     }
     try:
         open_status = maybe_open_source_blend()
-        if not os.path.exists(DIRECTOR_PATH_JSON):
-            raise FileNotFoundError(f"director path not found: {DIRECTOR_PATH_JSON}")
-        director_path = load_json(DIRECTOR_PATH_JSON)
-        FPS = int(director_path.get("fps", FPS))
-        FRAME_START = int(director_path.get("frame_start", FRAME_START))
-        FRAME_END = int(director_path.get("frame_end", FRAME_END))
-        beats = parse_beats(director_path)
+        if not os.path.exists(SHOWCASE_ROUTE_JSON):
+            raise FileNotFoundError(f"showcase route not found: {SHOWCASE_ROUTE_JSON}")
+        showcase_route = load_json(SHOWCASE_ROUTE_JSON)
+        FPS = int(showcase_route.get("fps", FPS))
+        FRAME_START = int(showcase_route.get("frame_start", FRAME_START))
+        FRAME_END = int(showcase_route.get("frame_end", FRAME_END))
+        beats = parse_beats(showcase_route)
         asset_contact_corrections = settle_grounded_gameplay_assets(args.ground_clearance_m)
         interaction_standoff_report = apply_interaction_standoffs(beats)
         terrain_report = sample_beats_to_terrain(
@@ -2049,7 +1999,7 @@ def main():
             ground_clearance=args.ground_clearance_m,
         )
         collision_report["arc_detours"] = arc_detour_report
-        runtime_motion_report = retime_runtime_route(beats, director_path, FPS)
+        runtime_motion_report = retime_runtime_route(beats, showcase_route, FPS)
         FRAME_END = int(runtime_motion_report["frame_end"])
         bpy.context.scene.frame_start = FRAME_START
         bpy.context.scene.frame_end = FRAME_END
@@ -2060,15 +2010,22 @@ def main():
             {"enabled": False, "scope": "lights_and_world_only"}
         )
         collection = get_or_reset_collection()
-        character = import_mixamo_character(collection, npc_fbx, args.npc_height_m, beats[0]["character_position_vec"])
-        # FBX importers may overwrite the scene FPS with the source clip rate
-        # (commonly 30).  All route timing above is expressed in director FPS,
-        # so restore it before animation and saving or the evaluated actor will
-        # move 25% faster than the validated 24-fps budget.
-        bpy.context.scene.render.fps = FPS
-        hold_key_count = animate_character(character, beats, args.npc_yaw_offset_degrees)
+        character = find_staged_npc(args.npc_object)
+        npc_height_m = float(
+            args.npc_height_m
+            if args.npc_height_m is not None
+            else character.get("target_height_m", 1.7)
+        )
+        npc_yaw_offset_degrees = float(
+            args.npc_yaw_offset_degrees
+            if args.npc_yaw_offset_degrees is not None
+            else character.get("code2games_npc_yaw_offset_degrees", 90.0)
+        )
+        if npc_height_m <= 0.0:
+            raise ValueError("npc_height_m must be positive")
+        hold_key_count = animate_character(character, beats, npc_yaw_offset_degrees)
         animation_report = configure_distance_synchronized_animation(
-            character, beats, FPS, args.npc_height_m)
+            character, beats, FPS, npc_height_m)
         rotation_report = audit_and_clamp_actor_rotation(
             character,
             FRAME_START,
@@ -2120,8 +2077,9 @@ def main():
             "runtime_motion_validation": runtime_motion_report,
             "event_count": len(event_objects),
             "character_object": character.name,
-            "character_fbx": npc_fbx,
-            "character_height_m": float(args.npc_height_m),
+            "character_source": "pre_staged_gaming_world",
+            "character_fbx": character.get("source_fbx"),
+            "character_height_m": npc_height_m,
             "character_ground_clearance_m": float(args.ground_clearance_m),
             "character_hold_key_count": int(hold_key_count),
             "character_animation": animation_report,
@@ -2139,26 +2097,26 @@ def main():
             "render_video": bool(args.render_video),
             "video_samples": int(args.video_samples) if args.render_video else None,
         })
-        log("DIRECTOR_GAMEPLAY_BLEND", OUTPUT_BLEND)
-        log("DIRECTOR_GAMEPLAY_REPORT", OUTPUT_REPORT)
-        log("DIRECTOR_RENDER_ENGINE", bpy.context.scene.render.engine)
+        log("VISUAL_SHOWCASE_BLEND", OUTPUT_BLEND)
+        log("VISUAL_SHOWCASE_REPORT", OUTPUT_REPORT)
+        log("VISUAL_SHOWCASE_RENDER_ENGINE", bpy.context.scene.render.engine)
         if args.render_video:
-            log("DIRECTOR_GAMEPLAY_MP4", OUTPUT_MP4)
-        log("DIRECTOR_GAMEPLAY_BEAT_COUNT", len(beats))
+            log("VISUAL_SHOWCASE_MP4", OUTPUT_MP4)
+        log("VISUAL_SHOWCASE_BEAT_COUNT", len(beats))
     except Exception as exc:
         report.update({
             "ok": False,
             "error": str(exc),
             "traceback": traceback.format_exc(),
         })
-        log("DIRECTOR_GAMEPLAY_ERROR", exc)
+        log("VISUAL_SHOWCASE_ERROR", exc)
         log(traceback.format_exc())
         error = exc
     else:
         error = None
     finally:
         write_json(OUTPUT_REPORT, report)
-        log("DIRECTOR_GAMEPLAY_REPORT", OUTPUT_REPORT)
+        log("VISUAL_SHOWCASE_REPORT", OUTPUT_REPORT)
     if error is not None:
         raise error
 

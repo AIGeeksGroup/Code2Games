@@ -1,4 +1,4 @@
-"""Build a reusable Director path from fixed gameplay placements.
+"""Build an optional visual-showcase route from fixed gameplay placements.
 
 This generic builder contains no scene coordinates, placement IDs, or asset-ID
 rules. It turns semantic placements into action beats, inserts bounded transit
@@ -24,7 +24,7 @@ PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.joi
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 DEFAULT_PLACEMENT_PLAN = os.path.join(get_packet_dir(PROJECT_ROOT), "gameplay_placement_plan.json")
 DEFAULT_ASSET_PLAN = os.path.join(STAGING_ROOT, "asset_realization", "asset_plan.json")
-DEFAULT_OUTPUT = os.path.join(STAGING_ROOT, "director_path", "director_path.json")
+DEFAULT_OUTPUT = os.path.join(STAGING_ROOT, "showcase_route", "showcase_route.json")
 
 
 ACTION_BY_EVENT = {
@@ -68,7 +68,7 @@ def script_args():
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Build a reusable Director path from fixed placements")
+    parser = argparse.ArgumentParser(description="Build an optional visual-showcase route from fixed placements")
     parser.add_argument("--placement_plan", default=DEFAULT_PLACEMENT_PLAN)
     parser.add_argument("--asset_plan", default=DEFAULT_ASSET_PLAN)
     parser.add_argument("--output", default=DEFAULT_OUTPUT)
@@ -694,8 +694,8 @@ def build_director(placement_data, asset_data, args):
     authored_beats = [beat for beat in beats if beat["kind"] == "authored"]
     referenced = list(dict.fromkeys(beat["placement_id"] for beat in authored_beats if beat.get("placement_id")))
     return {
-        "schema_version": 3, "status": "generic_director_route_from_fixed_placements",
-        "stage": "director_path", "genre": args.genre,
+        "schema_version": 3, "status": "visual_showcase_route_from_fixed_placements",
+        "stage": "visual_showcase_route", "genre": args.genre,
         "source_placement_plan": os.path.abspath(args.placement_plan),
         "source_asset_plan": os.path.abspath(args.asset_plan),
         "placement_policy": "read_only_fixed_anchors_no_asset_repositioning",
@@ -748,10 +748,10 @@ def main():
         raise ValueError("all route speeds and maximum_step_m must be positive")
     output = build_director(load_json(args.placement_plan), load_json(args.asset_plan), args)
     write_json(args.output, output)
-    print("DIRECTOR_PATH", os.path.abspath(args.output))
-    print("DIRECTOR_BEATS", len(output["beats"]))
-    print("DIRECTOR_PATH_LENGTH_M", output["estimated_actor_path_length_m"])
-    print("DIRECTOR_FRAME_RANGE", output["frame_start"], output["frame_end"])
+    print("SHOWCASE_ROUTE", os.path.abspath(args.output))
+    print("SHOWCASE_BEATS", len(output["beats"]))
+    print("SHOWCASE_ROUTE_LENGTH_M", output["estimated_actor_path_length_m"])
+    print("SHOWCASE_FRAME_RANGE", output["frame_start"], output["frame_end"])
 
 
 if __name__ == "__main__":

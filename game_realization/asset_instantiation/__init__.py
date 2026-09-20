@@ -1,1 +1,1 @@
-"""Physical asset realization and Blender scene instantiation."""
+"""Physical asset and gameplay-NPC realization in the Blender world."""

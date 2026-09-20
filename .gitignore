@@ -13,6 +13,8 @@
 !/scene_and_gameplay_planning/**
 !/game_realization/
 !/game_realization/**
-!/gameplay_logic/
-!/gameplay_logic/**
+!/visual_showcase/
+!/visual_showcase/**
+!/scripts/
+!/scripts/**
 **/__pycache__/
