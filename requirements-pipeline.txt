@@ -1,0 +1,7 @@
+# Lightweight dependencies used by the orchestration scripts.
+# Blender supplies bpy/mathutils, while PyTorch and Hunyuan3D must be installed
+# following the Hunyuan3D upstream environment instructions.
+certifi
+dashscope
+Pillow>=10.0
+trimesh>=3.22
