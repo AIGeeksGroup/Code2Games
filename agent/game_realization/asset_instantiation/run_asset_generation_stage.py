@@ -12,12 +12,17 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "shared_representation"))
+if COMMON_DIR not in sys.path:
+    sys.path.insert(0, COMMON_DIR)
+
 from staging_paths import get_demo_name, get_staging_root
 
 
 PROJECT_ROOT = Path(
     os.environ.get("CODE2WORLDS_ROOT")
-    or Path(__file__).resolve().parents[2]
+    or Path(__file__).resolve().parents[3]
 )
 STAGING_ROOT = Path(get_staging_root(PROJECT_ROOT))
 DEFAULT_ASSET_PLAN = STAGING_ROOT / "asset_realization/asset_plan.json"

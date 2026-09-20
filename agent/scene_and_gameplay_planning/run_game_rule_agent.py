@@ -3,9 +3,15 @@ import base64
 import json
 import os
 import re
+import sys
 import traceback
 import urllib.error
 import urllib.request
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "shared_representation"))
+if COMMON_DIR not in sys.path:
+    sys.path.insert(0, COMMON_DIR)
 
 from placement_constraints import ALLOWED_ELEMENT_TYPES
 from staging_paths import get_packet_dir

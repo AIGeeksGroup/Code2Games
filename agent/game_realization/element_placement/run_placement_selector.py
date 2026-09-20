@@ -7,6 +7,12 @@ import re
 import sys
 import urllib.request
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "shared_representation"))
+for _path in (SCRIPT_DIR, COMMON_DIR):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
+
 from placement_io import clear_downstream_outputs, contains_coordinate_key, load_json, packet_path, sha256_file, strip_json_markdown, write_json, write_text
 from placement_constraints import ALLOWED_SURFACE_ALIGNMENT_MODES
 

@@ -9,8 +9,9 @@ import bpy
 import mathutils
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-if SCRIPT_DIR not in sys.path:
-    sys.path.insert(0, SCRIPT_DIR)
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "shared_representation"))
+if COMMON_DIR not in sys.path:
+    sys.path.insert(0, COMMON_DIR)
 from staging_paths import get_demo_name, get_staging_root
 
 

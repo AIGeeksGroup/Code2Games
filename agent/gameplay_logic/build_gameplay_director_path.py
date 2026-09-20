@@ -12,10 +12,14 @@ import math
 import os
 import sys
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "shared_representation"))
+if COMMON_DIR not in sys.path:
+    sys.path.insert(0, COMMON_DIR)
+
 from staging_paths import get_packet_dir, get_staging_root
 
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, "..", ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 DEFAULT_PLACEMENT_PLAN = os.path.join(get_packet_dir(PROJECT_ROOT), "gameplay_placement_plan.json")

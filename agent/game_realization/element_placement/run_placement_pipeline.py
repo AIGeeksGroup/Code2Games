@@ -2,7 +2,14 @@
 import argparse
 import json
 import math
+import os
 import sys
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "shared_representation"))
+for _path in (SCRIPT_DIR, COMMON_DIR):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
 
 from placement_constraints import (
     ALLOWED_ELEMENT_TYPES,

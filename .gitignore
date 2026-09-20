@@ -1,47 +1,20 @@
-# This public repository intentionally tracks only the tested pipeline source.
+# This public repository intentionally tracks only the curated pipeline source.
 # Everything else is denied by default so large generated assets cannot be
 # added accidentally with `git add .`.
 *
 
 !/.gitignore
 !/README.md
-!/SUCCESSFUL_PIPELINE_ZH.md
-!/FOUR_DEMOS_ASSET_GUIDE.md
-!/requirements-pipeline.txt
+!/requirements.txt
 
 !/agent/
-!/agent/game_staging/
-!/agent/game_staging/extract_default_camera_packet.py
-!/agent/game_staging/run_scene_understanding_vlm.py
-!/agent/game_staging/run_game_rule_agent.py
-!/agent/game_staging/extract_placement_candidates.py
-!/agent/game_staging/run_placement_pipeline.py
-!/agent/game_staging/run_placement_selector.py
-!/agent/game_staging/placement_constraints.py
-!/agent/game_staging/placement_io.py
-!/agent/game_staging/staging_paths.py
-!/agent/game_staging/run_asset_realization.py
-!/agent/game_staging/run_asset_generation_stage.py
-!/agent/game_staging/stage_gameplay_assets.py
-!/agent/game_staging/build_gameplay_director_path.py
-!/agent/game_staging/stage_director_gameplay.py
-!/agent/game_staging/build_genre_director_path.py
-!/agent/game_staging/stage_genre_director_gameplay.py
-!/agent/game_staging/racing_speedway_layout.py
-!/agent/game_staging/stage_fps_showcase_gameplay.py
-!/agent/game_staging/stage_tps_showcase_gameplay.py
-!/agent/game_staging/stage_racing_showcase_gameplay.py
-!/agent/game_staging/stage_wingsuit_showcase_gameplay.py
-!/agent/game_staging/run_four_genre_directors.sh
-!/agent/game_staging/verify_fps_staging.py
-!/agent/game_staging/verify_tps_staging.py
-!/agent/game_staging/verify_racing_staging.py
-!/agent/game_staging/verify_wingsuit_staging.py
-!/agent/game_staging/verify_swat_director_actor.py
-!/agent/game_staging/verify_racing_vehicle_director.py
-
-!/agent/unreal_engine/
-!/agent/unreal_engine/**
-/agent/unreal_engine/__pycache__/
-!/tests/
-!/tests/test_unreal_engine_pipeline.py
+!/agent/__init__.py
+!/agent/shared_representation/
+!/agent/shared_representation/**
+!/agent/scene_and_gameplay_planning/
+!/agent/scene_and_gameplay_planning/**
+!/agent/game_realization/
+!/agent/game_realization/**
+!/agent/gameplay_logic/
+!/agent/gameplay_logic/**
+agent/**/__pycache__/

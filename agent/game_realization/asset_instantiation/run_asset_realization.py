@@ -6,6 +6,13 @@ import os
 import sys
 import urllib.request
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+COMMON_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", "shared_representation"))
+PLACEMENT_DIR = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "element_placement"))
+for _path in (SCRIPT_DIR, COMMON_DIR, PLACEMENT_DIR):
+    if _path not in sys.path:
+        sys.path.insert(0, _path)
+
 from placement_constraints import (
     LOGICAL_ONLY_ELEMENT_TYPES,
     NON_GLB_ALLOWED_ELEMENT_TYPES,
@@ -21,7 +28,7 @@ from staging_paths import (
 )
 
 
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+PROJECT_ROOT = os.path.abspath(os.path.join(SCRIPT_DIR, "..", "..", ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 PACKET_DIR = get_packet_dir(PROJECT_ROOT)
 OUTPUT_DIR = os.path.join(STAGING_ROOT, "asset_realization")
