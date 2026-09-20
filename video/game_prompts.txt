@@ -1,0 +1,59 @@
+fps_1.mp4
+Create a first-person sci-fi assault on a red desert ridgeline. Eliminate three hostile sentries and secure the remote signal relay.
+
+fps_2.mp4
+Create a first-person sci-fi combat sweep on a red-desert ridgeline. Track and eliminate three hostile sentries, then secure the remote signal uplink.
+
+monster_hunt_1.mp4
+Create a third-person monster hunt in a dark forest. Track the Thornback, break its neck armor, defeat it, and claim the trophy.
+
+monster_hunt_2.mp4
+Create a storm-weather Thornback hunt through a wet forest. Track the creature in low visibility, defeat it, and retrieve the trophy.
+
+racing_1.mp4
+Create a high-speed off-road rally through a desert oasis. Drive across uneven terrain, use nitro, pass eight checkpoints, and reach the finish.
+
+racing_2.mp4
+Create a desert-storm rally across layered dunes. Control the vehicle over changing slopes, pass eight rally gates, and complete the stage.
+
+skiing_1.mp4
+Create a third-person alpine slalom on a bright snow course. Control speed and direction, clear eight gates, and reach the finish arch.
+
+skiing_2.mp4
+Create a golden-hour alpine slalom route. Descend through warm-lit snow, clear eight ordered gates, and reach the finish without penalties.
+
+temple_run_1.mp4
+Create a third-person reconnaissance game on a rocky ridgeline. Explore landmarks, locate a hidden signal, inspect a shrine, and reach extraction.
+
+temple_run_2.mp4
+Create a third-person relic runner in a rain-soaked jungle temple. Dodge ruin obstacles, collect five relics, and reach the escape shrine.
+
+third_person_shooter_1.mp4
+Create a third-person tactical mission in a dark rainy jungle. Follow tracks, avoid or eliminate patrols, and secure the target uplink.
+
+third_person_shooter_2.mp4
+Create a third-person coastal-jungle infiltration. Scout through vegetation, flank hostile patrols, and secure the marked relay with a silenced weapon.
+
+underwater_exploration_1.mp4
+Create a free-swimming scientific survey in a coral reef. Collect three samples, investigate two marked sites, and return to extraction.
+
+underwater_exploration_2.mp4
+Create a blackwater anomaly survey under low visibility. Collect three samples, scan two anomalous sites, monitor sonar, and extract after completion.
+
+wingsuit_1.mp4
+Create an F-104 low-altitude flight mission at dawn. Follow the safe corridor, activate four flight cells, and lock the summit mast.
+
+wingsuit_2.mp4
+Create a summit-intercept flight over foggy mountains. Follow the designated corridor, activate four terrain-link cells, and lock the summit mast.
+
+assassins_creed_style_1.mp4
+Create a third-person fantasy archer assassination in a rocky desert. Scout the arena, take cover, locate the target, and eliminate it with a bow.
+
+assassins_creed_style_2.mp4
+Create a third-person archer hunt in a dead-tree wasteland. Position using sparse terrain, aim at distant targets, and eliminate them with a bow.
+
+minecraft_style_1.mp4
+Create a third-person block-style scavenging challenge in a red desert canyon. Explore markers, collect resources, avoid hazards, and complete the required set.
+
+minecraft_style_2.mp4
+Create a block-style resource expedition across rocky clearings and forest terrain. Traverse multiple regions, gather crafting materials, and complete the resource set.

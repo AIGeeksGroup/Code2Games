@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101617">
+  <meta name="description" content="Code2Games: Enabling Coding Agents for Gaming World Generation. Explore ten game worlds through twenty video examples.">
+  <title>Code2Games: Enabling Coding Agents for Gaming World Generation</title>
+  <link rel="preload" href="assets/fonts/nunito-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="hero.css">
+  <link rel="stylesheet" href="results.css">
+  <script src="app.js" defer></script>
+  <script src="hero.js" defer></script>
+  <script src="results.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#games">Skip to game videos</a>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute;overflow:hidden" aria-hidden="true">
+    <symbol id="icon-down" viewBox="0 0 24 24"><path d="M12 5v14m-6-6 6 6 6-6"/></symbol>
+    <symbol id="icon-up" viewBox="0 0 24 24"><path d="M12 19V5m-6 6 6-6 6 6"/></symbol>
+    <symbol id="icon-expand" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-7 7M10 20H4v-6m0 6 7-7"/></symbol>
+    <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  </svg>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="wordmark" href="#top" aria-label="Code2Games home">Code<span>2</span>Games</a>
+      <nav class="header-nav" aria-label="Main navigation">
+        <a class="header-link" href="https://arxiv.org/abs/2600.00000" target="_blank" rel="noopener noreferrer">Paper</a>
+        <a class="header-link" href="https://github.com/AIGeeksGroup/Code2Games" target="_blank" rel="noopener noreferrer">Code</a>
+        <a class="header-link" href="https://huggingface.co/datasets/AIGeeksGroup/GameCode4D" target="_blank" rel="noopener noreferrer">Data</a>
+        <a class="header-link" href="#games">Explore games <svg class="arrow-icon" aria-hidden="true"><use href="#icon-down"/></svg></a>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" aria-labelledby="project-title">
+      <div class="hero-video-window" id="hero-preview" aria-hidden="true">
+        <video class="hero-background" src="assets/hero-reel.mp4" poster="assets/posters/underwater_exploration_1.jpg" autoplay muted loop playsinline preload="auto" tabindex="-1"></video>
+        <div class="hero-video-shade"></div>
+      </div>
+      <div class="hero-divider" aria-hidden="true"></div>
+      <button class="hero-trigger" type="button" aria-label="Expand game preview" aria-expanded="false" aria-controls="hero-preview">
+        <span class="hero-hover-hint"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg><span class="hover-instruction">Hover to explore</span><span class="touch-instruction">Tap to explore</span></span>
+      </button>
+      <div class="hero-copy">
+        <p class="hero-eyebrow">FROM CODE TO GAME WORLDS</p>
+        <h1 id="project-title"><span class="project-name">Code2Games:</span> <span class="project-subtitle">Enabling Coding Agents<br>for Gaming World Generation</span></h1>
+        <div class="hero-credits">
+          <p class="hero-authors">
+            <span><a href="https://github.com/weiwu-7" target="_blank" rel="noopener noreferrer">Wei Wu</a><sup>1*</sup></span>
+            <span><a href="https://github.com/xzy-Zayn" target="_blank" rel="noopener noreferrer">Ziyang Xu</a><sup>1*</sup></span>
+            <span><a href="https://steve-zeyu-zhang.github.io/" target="_blank" rel="noopener noreferrer">Zeyu Zhang</a><sup>1*†</sup></span>
+            <span><a href="https://yangyangkiki.github.io/" target="_blank" rel="noopener noreferrer">Yang Zhao</a><sup>2</sup></span>
+            <span><a href="https://ha0tang.github.io/" target="_blank" rel="noopener noreferrer">Hao Tang</a><sup>1‡</sup></span>
+          </p>
+          <p class="hero-affiliations">
+            <span><sup>1</sup> School of Computer Science, Peking University</span>
+            <span><sup>2</sup> La Trobe University</span>
+          </p>
+          <p class="hero-contributions">
+            <span><sup>*</sup> Equal contribution.</span>
+            <span><sup>†</sup> Project lead.</span>
+            <span><sup>‡</sup> Corresponding author.</span>
+          </p>
+        </div>
+      </div>
+      <div class="hero-footer container">
+        <div class="hero-scene-info">
+          <p class="hero-scene-kicker"><span id="hero-scene-index">01</span><span class="hero-scene-divider">/</span>10 GAME WORLDS</p>
+          <p class="hero-scene-name" id="hero-scene-name">Underwater Exploration</p>
+          <div class="hero-scenes" role="group" aria-label="Choose a background game"></div>
+        </div>
+        <div class="hero-actions">
+          <button class="hero-playback" type="button" aria-label="Pause background video" title="Pause background video">
+            <svg class="pause-symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6v12M16 6v12"/></svg>
+            <svg class="play-symbol" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 11 7-11 7Z"/></svg>
+          </button>
+          <a class="hero-scroll" href="#games"><span class="hero-scroll-label">Explore game worlds</span><span class="hero-scroll-circle"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-down"/></svg></span><span class="hero-scroll-accessible">Explore game worlds</span></a>
+        </div>
+      </div>
+    </section>
+    <div class="container" id="games">
+      <div class="collection-bar">
+        <p class="collection-title">Generated game worlds</p>
+        <div class="collection-tools">
+          <p class="collection-count"><strong>10</strong> games <span>/</span> <strong>20</strong> videos</p>
+          <div class="jump-menu">
+            <select id="game-jump" aria-label="Jump to a game">
+              <option value="">Jump to a game</option>
+              <option value="underwater-exploration">01 — Underwater Exploration</option>
+              <option value="monster-hunt">02 — Monster Hunt</option>
+              <option value="third-person-shooter">03 — Third-Person Shooter</option>
+              <option value="racing">04 — Desert Rally</option>
+              <option value="fps">05 — First-Person Shooter</option>
+              <option value="minecraft-style">06 — Block World</option>
+              <option value="temple-run">07 — Temple Adventure</option>
+              <option value="skiing">08 — Alpine Skiing</option>
+              <option value="wingsuit">09 — Flight Missions</option>
+              <option value="archer-hunt">10 — Archer Hunt</option>
+            </select>
+            <svg class="arrow-icon" aria-hidden="true"><use href="#icon-chevron"/></svg>
+          </div>
+        </div>
+      </div>
+      <section class="game-section" id="underwater-exploration" aria-labelledby="underwater-exploration-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">01</span><h2 id="underwater-exploration-heading" tabindex="-1">Underwater Exploration</h2></div>
+          <span class="game-genre">Exploration</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-underwater_exploration_1" src="video/underwater_exploration_1.mp4" poster="assets/posters/underwater_exploration_1.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Underwater Exploration: Coral Reef Survey">
+                <a href="video/underwater_exploration_1.mp4">Watch Coral Reef Survey</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Coral Reef Survey" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/underwater_exploration_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Coral Reef Survey</span>
+              <button class="expand-video" type="button" data-video="video-underwater_exploration_1" aria-label="View Coral Reef Survey fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/underwater_exploration_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-underwater_exploration_2" src="video/underwater_exploration_2.mp4" poster="assets/posters/underwater_exploration_2.jpg" autoplay muted loop playsinline controls preload="metadata" aria-label="Underwater Exploration: Blackwater Survey">
+                <a href="video/underwater_exploration_2.mp4">Watch Blackwater Survey</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Blackwater Survey" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/underwater_exploration_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Blackwater Survey</span>
+              <button class="expand-video" type="button" data-video="video-underwater_exploration_2" aria-label="View Blackwater Survey fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/underwater_exploration_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="monster-hunt" aria-labelledby="monster-hunt-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">02</span><h2 id="monster-hunt-heading" tabindex="-1">Monster Hunt</h2></div>
+          <span class="game-genre">Action adventure</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-monster_hunt_1" data-src="video/monster_hunt_1.mp4" poster="assets/posters/monster_hunt_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Monster Hunt: The Thornback Hunt">
+                <a href="video/monster_hunt_1.mp4">Watch The Thornback Hunt</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play The Thornback Hunt" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/monster_hunt_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>The Thornback Hunt</span>
+              <button class="expand-video" type="button" data-video="video-monster_hunt_1" aria-label="View The Thornback Hunt fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/monster_hunt_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-monster_hunt_2" data-src="video/monster_hunt_2.mp4" poster="assets/posters/monster_hunt_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Monster Hunt: Stormwood Hunt">
+                <a href="video/monster_hunt_2.mp4">Watch Stormwood Hunt</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Stormwood Hunt" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/monster_hunt_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Stormwood Hunt</span>
+              <button class="expand-video" type="button" data-video="video-monster_hunt_2" aria-label="View Stormwood Hunt fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/monster_hunt_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="third-person-shooter" aria-labelledby="third-person-shooter-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">03</span><h2 id="third-person-shooter-heading" tabindex="-1">Third-Person Shooter</h2></div>
+          <span class="game-genre">Tactical action</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-third_person_shooter_1" data-src="video/third_person_shooter_1.mp4" poster="assets/posters/third_person_shooter_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Third-Person Shooter: Rainforest Recon">
+                <a href="video/third_person_shooter_1.mp4">Watch Rainforest Recon</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Rainforest Recon" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/third_person_shooter_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Rainforest Recon</span>
+              <button class="expand-video" type="button" data-video="video-third_person_shooter_1" aria-label="View Rainforest Recon fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/third_person_shooter_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-third_person_shooter_2" data-src="video/third_person_shooter_2.mp4" poster="assets/posters/third_person_shooter_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Third-Person Shooter: Coastal Infiltration">
+                <a href="video/third_person_shooter_2.mp4">Watch Coastal Infiltration</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Coastal Infiltration" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/third_person_shooter_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Coastal Infiltration</span>
+              <button class="expand-video" type="button" data-video="video-third_person_shooter_2" aria-label="View Coastal Infiltration fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/third_person_shooter_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="racing" aria-labelledby="racing-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">04</span><h2 id="racing-heading" tabindex="-1">Desert Rally</h2></div>
+          <span class="game-genre">Racing</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-racing_2" data-src="video/racing_2.mp4" poster="assets/posters/racing_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Desert Rally: Desert Storm Rally">
+                <a href="video/racing_2.mp4">Watch Desert Storm Rally</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Desert Storm Rally" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/racing_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Desert Storm Rally</span>
+              <button class="expand-video" type="button" data-video="video-racing_2" aria-label="View Desert Storm Rally fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/racing_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-racing_1" data-src="video/racing_1.mp4" poster="assets/posters/racing_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Desert Rally: Oasis Rally">
+                <a href="video/racing_1.mp4">Watch Oasis Rally</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Oasis Rally" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/racing_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Oasis Rally</span>
+              <button class="expand-video" type="button" data-video="video-racing_1" aria-label="View Oasis Rally fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/racing_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="fps" aria-labelledby="fps-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">05</span><h2 id="fps-heading" tabindex="-1">First-Person Shooter</h2></div>
+          <span class="game-genre">Sci-fi combat</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-fps_2" data-src="video/fps_2.mp4" poster="assets/posters/fps_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="First-Person Shooter: Ridgeline Uplink">
+                <a href="video/fps_2.mp4">Watch Ridgeline Uplink</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Ridgeline Uplink" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/fps_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Ridgeline Uplink</span>
+              <button class="expand-video" type="button" data-video="video-fps_2" aria-label="View Ridgeline Uplink fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/fps_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-fps_1" data-src="video/fps_1.mp4" poster="assets/posters/fps_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="First-Person Shooter: Red Desert Assault">
+                <a href="video/fps_1.mp4">Watch Red Desert Assault</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Red Desert Assault" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/fps_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Red Desert Assault</span>
+              <button class="expand-video" type="button" data-video="video-fps_1" aria-label="View Red Desert Assault fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/fps_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="minecraft-style" aria-labelledby="minecraft-style-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">06</span><h2 id="minecraft-style-heading" tabindex="-1">Block World</h2></div>
+          <span class="game-genre">Resource exploration</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-minecraft_style_2" data-src="video/minecraft_style_2.mp4" poster="assets/posters/minecraft_style_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Block World: Forest Expedition">
+                <a href="video/minecraft_style_2.mp4">Watch Forest Expedition</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Forest Expedition" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/minecraft_style_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Forest Expedition</span>
+              <button class="expand-video" type="button" data-video="video-minecraft_style_2" aria-label="View Forest Expedition fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/minecraft_style_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-minecraft_style_1" data-src="video/minecraft_style_1.mp4" poster="assets/posters/minecraft_style_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Block World: Canyon Scavenger">
+                <a href="video/minecraft_style_1.mp4">Watch Canyon Scavenger</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Canyon Scavenger" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/minecraft_style_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Canyon Scavenger</span>
+              <button class="expand-video" type="button" data-video="video-minecraft_style_1" aria-label="View Canyon Scavenger fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/minecraft_style_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="temple-run" aria-labelledby="temple-run-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">07</span><h2 id="temple-run-heading" tabindex="-1">Temple Adventure</h2></div>
+          <span class="game-genre">Exploration &amp; running</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-temple_run_2" data-src="video/temple_run_2.mp4" poster="assets/posters/temple_run_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Temple Adventure: Jungle Relic Run">
+                <a href="video/temple_run_2.mp4">Watch Jungle Relic Run</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Jungle Relic Run" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/temple_run_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Jungle Relic Run</span>
+              <button class="expand-video" type="button" data-video="video-temple_run_2" aria-label="View Jungle Relic Run fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/temple_run_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-temple_run_1" data-src="video/temple_run_1.mp4" poster="assets/posters/temple_run_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Temple Adventure: Ridgeline Recon">
+                <a href="video/temple_run_1.mp4">Watch Ridgeline Recon</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Ridgeline Recon" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/temple_run_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Ridgeline Recon</span>
+              <button class="expand-video" type="button" data-video="video-temple_run_1" aria-label="View Ridgeline Recon fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/temple_run_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="skiing" aria-labelledby="skiing-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">08</span><h2 id="skiing-heading" tabindex="-1">Alpine Skiing</h2></div>
+          <span class="game-genre">Sports</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-skiing_1" data-src="video/skiing_1.mp4" poster="assets/posters/skiing_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Alpine Skiing: Alpine Slalom">
+                <a href="video/skiing_1.mp4">Watch Alpine Slalom</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Alpine Slalom" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/skiing_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Alpine Slalom</span>
+              <button class="expand-video" type="button" data-video="video-skiing_1" aria-label="View Alpine Slalom fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/skiing_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-skiing_2" data-src="video/skiing_2.mp4" poster="assets/posters/skiing_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Alpine Skiing: Golden-Hour Descent">
+                <a href="video/skiing_2.mp4">Watch Golden-Hour Descent</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Golden-Hour Descent" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/skiing_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Golden-Hour Descent</span>
+              <button class="expand-video" type="button" data-video="video-skiing_2" aria-label="View Golden-Hour Descent fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/skiing_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="wingsuit" aria-labelledby="wingsuit-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">09</span><h2 id="wingsuit-heading" tabindex="-1">Flight Missions</h2></div>
+          <span class="game-genre">Flight</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-wingsuit_1" data-src="video/wingsuit_1.mp4" poster="assets/posters/wingsuit_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Flight Missions: Dawn Corridor">
+                <a href="video/wingsuit_1.mp4">Watch Dawn Corridor</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Dawn Corridor" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/wingsuit_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Dawn Corridor</span>
+              <button class="expand-video" type="button" data-video="video-wingsuit_1" aria-label="View Dawn Corridor fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/wingsuit_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-wingsuit_2" data-src="video/wingsuit_2.mp4" poster="assets/posters/wingsuit_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Flight Missions: Summit Intercept">
+                <a href="video/wingsuit_2.mp4">Watch Summit Intercept</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Summit Intercept" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/wingsuit_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Summit Intercept</span>
+              <button class="expand-video" type="button" data-video="video-wingsuit_2" aria-label="View Summit Intercept fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/wingsuit_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="game-section" id="archer-hunt" aria-labelledby="archer-hunt-heading">
+        <div class="game-heading">
+          <div class="game-title"><span class="game-number" aria-hidden="true">10</span><h2 id="archer-hunt-heading" tabindex="-1">Archer Hunt</h2></div>
+          <span class="game-genre">Stealth action</span>
+        </div>
+        <div class="video-pair">
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-assassins_creed_style_1" data-src="video/assassins_creed_style_1.mp4" poster="assets/posters/assassins_creed_style_1.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Archer Hunt: Desert Assassination">
+                <a href="video/assassins_creed_style_1.mp4">Watch Desert Assassination</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Desert Assassination" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/assassins_creed_style_1.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Desert Assassination</span>
+              <button class="expand-video" type="button" data-video="video-assassins_creed_style_1" aria-label="View Desert Assassination fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/assassins_creed_style_1.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <div class="player">
+              <video id="video-assassins_creed_style_2" data-src="video/assassins_creed_style_2.mp4" poster="assets/posters/assassins_creed_style_2.jpg" autoplay muted loop playsinline controls preload="none" aria-label="Archer Hunt: Wasteland Hunt">
+                <a href="video/assassins_creed_style_2.mp4">Watch Wasteland Hunt</a>
+              </video>
+              <button class="play-fallback" type="button" aria-label="Play Wasteland Hunt" hidden><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><path d="m20 16 13 8-13 8Z" fill="currentColor" stroke="none"/></svg>Play video</button>
+              <p class="video-error" hidden>Unable to play this recording.<a href="video/assassins_creed_style_2.mp4">Open video</a></p>
+            </div>
+            <figcaption class="video-caption">
+              <span class="clip-title"><span class="clip-dot" aria-hidden="true"></span>Wasteland Hunt</span>
+              <button class="expand-video" type="button" data-video="video-assassins_creed_style_2" aria-label="View Wasteland Hunt fullscreen" title="Fullscreen"><svg class="arrow-icon" aria-hidden="true"><use href="#icon-expand"/></svg></button>
+              <noscript><a href="video/assassins_creed_style_2.mp4">Watch video</a></noscript>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+      <section class="overview-section" id="overview" aria-labelledby="overview-heading">
+        <h2 id="overview-heading">Overview</h2>
+        <figure class="overview-figure">
+          <a class="overview-image" href="figs/overview.png" target="_blank" rel="noopener noreferrer" aria-label="View the Code2Games overview at full size">
+            <img src="figs/overview.png" width="3969" height="1925" loading="lazy" decoding="async" alt="Code2Games workflow: a game intent and a base world pass through scene analysis, gameplay planning, gaming world generation, and game engine customization.">
+          </a>
+          <figcaption>Overview of Code2Games, which transforms a game intent and its paired base world into a gaming world and adapts it to a game engine.</figcaption>
+        </figure>
+      </section>
+      <section class="results-section" id="results" aria-labelledby="results-heading">
+        <h2 id="results-heading">Results</h2>
+        <figure class="result-chart" id="main-results">
+          <figcaption id="main-results-title">Visual Quality and Interactive Fidelity on GameCode4D</figcaption>
+          <div class="chart-meta"><span>Score ↑ <span class="chart-axis-range">· Axis: 55–100</span></span><span class="chart-scroll-hint">Scroll to compare →</span></div>
+          <ul class="chart-legend" aria-label="Methods">
+              <li data-series="0"><span class="chart-swatch" style="--series-color:#526c7c" aria-hidden="true"></span>OpenGame + Qwen3.8-Max</li>
+              <li data-series="1"><span class="chart-swatch" style="--series-color:#8b9cac" aria-hidden="true"></span>AutoUE + Qwen3.8-Max</li>
+              <li data-series="2"><span class="chart-swatch" style="--series-color:#607b90" aria-hidden="true"></span>Qwen Code + Qwen3.8-Max</li>
+              <li data-series="3"><span class="chart-swatch" style="--series-color:#8cabad" aria-hidden="true"></span>Codex + GPT-5.6 Sol</li>
+              <li data-series="4"><span class="chart-swatch" style="--series-color:#c0cbd1" aria-hidden="true"></span>Claude Code + Opus 5</li>
+              <li data-series="5" class="is-ours"><span class="chart-swatch" style="--series-color:#328e9e" aria-hidden="true"></span>Ours + Qwen3.8-Max</li>
+              <li data-series="6" class="is-ours"><span class="chart-swatch" style="--series-color:#08b9d6" aria-hidden="true"></span>Ours + GPT-5.6 Sol</li>
+              <li data-series="7" class="is-ours"><span class="chart-swatch" style="--series-color:#d7bb83" aria-hidden="true"></span>Ours + Claude Opus 5</li>
+          </ul>
+          <div class="chart-scroll" tabindex="0" role="region" aria-label="Visual Quality and Interactive Fidelity on GameCode4D; scroll horizontally on smaller screens">
+            <svg class="result-plot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 446" role="group" aria-labelledby="main-results-title main-results-description">
+              <desc id="main-results-description">Grouped bar chart comparing eight methods on GameCode4D. The score axis runs from 55 to 100. All scores are shown above their bars. Focus or hover over a bar to identify its method and score.</desc>
+              <g class="chart-tick"><line x1="52" y1="394.00" x2="1416" y2="394.00"/><text x="40" y="398.00" text-anchor="end">55</text></g>
+              <g class="chart-tick"><line x1="52" y1="353.33" x2="1416" y2="353.33"/><text x="40" y="357.33" text-anchor="end">60</text></g>
+              <g class="chart-tick"><line x1="52" y1="312.67" x2="1416" y2="312.67"/><text x="40" y="316.67" text-anchor="end">65</text></g>
+              <g class="chart-tick"><line x1="52" y1="272.00" x2="1416" y2="272.00"/><text x="40" y="276.00" text-anchor="end">70</text></g>
+              <g class="chart-tick"><line x1="52" y1="231.33" x2="1416" y2="231.33"/><text x="40" y="235.33" text-anchor="end">75</text></g>
+              <g class="chart-tick"><line x1="52" y1="190.67" x2="1416" y2="190.67"/><text x="40" y="194.67" text-anchor="end">80</text></g>
+              <g class="chart-tick"><line x1="52" y1="150.00" x2="1416" y2="150.00"/><text x="40" y="154.00" text-anchor="end">85</text></g>
+              <g class="chart-tick"><line x1="52" y1="109.33" x2="1416" y2="109.33"/><text x="40" y="113.33" text-anchor="end">90</text></g>
+              <g class="chart-tick"><line x1="52" y1="68.67" x2="1416" y2="68.67"/><text x="40" y="72.67" text-anchor="end">95</text></g>
+              <g class="chart-tick"><line x1="52" y1="28.00" x2="1416" y2="28.00"/><text x="40" y="32.00" text-anchor="end">100</text></g>
+              <line class="chart-baseline" x1="52" y1="394" x2="1416" y2="394"/>
+              <g class="chart-series" data-series="0">
+                <rect class="chart-bar" x="63.67" y="330.56" width="22" height="63.44" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, IQ: 62.8" data-method="OpenGame + Qwen3.8-Max" data-metric="IQ" data-value="62.8"/>
+                <text class="chart-value" x="74.67" y="322.56" text-anchor="middle">62.8</text>
+                <rect class="chart-bar" x="291.00" y="186.60" width="22" height="207.40" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Dynamic: 80.5" data-method="OpenGame + Qwen3.8-Max" data-metric="Dynamic" data-value="80.5"/>
+                <text class="chart-value" x="302.00" y="178.60" text-anchor="middle">80.5</text>
+                <rect class="chart-bar" x="518.33" y="75.99" width="22" height="318.01" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Motion: 94.1" data-method="OpenGame + Qwen3.8-Max" data-metric="Motion" data-value="94.1"/>
+                <text class="chart-value" x="529.33" y="67.99" text-anchor="middle">94.1</text>
+                <rect class="chart-bar" x="745.67" y="202.87" width="22" height="191.13" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Setting: 78.5" data-method="OpenGame + Qwen3.8-Max" data-metric="Setting" data-value="78.5"/>
+                <text class="chart-value" x="756.67" y="194.87" text-anchor="middle">78.5</text>
+                <rect class="chart-bar" x="973.00" y="312.67" width="22" height="81.33" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Inter.: 65.0" data-method="OpenGame + Qwen3.8-Max" data-metric="Inter." data-value="65.0"/>
+                <text class="chart-value" x="984.00" y="304.67" text-anchor="middle">65.0</text>
+                <rect class="chart-bar" x="1200.33" y="296.40" width="22" height="97.60" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Physics: 67.0" data-method="OpenGame + Qwen3.8-Max" data-metric="Physics" data-value="67.0"/>
+                <text class="chart-value" x="1211.33" y="288.40" text-anchor="middle">67.0</text>
+              </g>
+              <g class="chart-series" data-series="1">
+                <rect class="chart-bar" x="89.67" y="328.12" width="22" height="65.88" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, IQ: 63.1" data-method="AutoUE + Qwen3.8-Max" data-metric="IQ" data-value="63.1"/>
+                <text class="chart-value" x="100.67" y="320.12" text-anchor="middle">63.1</text>
+                <rect class="chart-bar" x="317.00" y="172.77" width="22" height="221.23" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Dynamic: 82.2" data-method="AutoUE + Qwen3.8-Max" data-metric="Dynamic" data-value="82.2"/>
+                <text class="chart-value" x="328.00" y="164.77" text-anchor="middle">82.2</text>
+                <rect class="chart-bar" x="544.33" y="78.43" width="22" height="315.57" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Motion: 93.8" data-method="AutoUE + Qwen3.8-Max" data-metric="Motion" data-value="93.8"/>
+                <text class="chart-value" x="555.33" y="70.43" text-anchor="middle">93.8</text>
+                <rect class="chart-bar" x="771.67" y="188.23" width="22" height="205.77" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Setting: 80.3" data-method="AutoUE + Qwen3.8-Max" data-metric="Setting" data-value="80.3"/>
+                <text class="chart-value" x="782.67" y="180.23" text-anchor="middle">80.3</text>
+                <rect class="chart-bar" x="999.00" y="306.16" width="22" height="87.84" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Inter.: 65.8" data-method="AutoUE + Qwen3.8-Max" data-metric="Inter." data-value="65.8"/>
+                <text class="chart-value" x="1010.00" y="298.16" text-anchor="middle">65.8</text>
+                <rect class="chart-bar" x="1226.33" y="282.57" width="22" height="111.43" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Physics: 68.7" data-method="AutoUE + Qwen3.8-Max" data-metric="Physics" data-value="68.7"/>
+                <text class="chart-value" x="1237.33" y="274.57" text-anchor="middle">68.7</text>
+              </g>
+              <g class="chart-series" data-series="2">
+                <rect class="chart-bar" x="115.67" y="339.51" width="22" height="54.49" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, IQ: 61.7" data-method="Qwen Code + Qwen3.8-Max" data-metric="IQ" data-value="61.7"/>
+                <text class="chart-value" x="126.67" y="331.51" text-anchor="middle">61.7</text>
+                <rect class="chart-bar" x="343.00" y="208.56" width="22" height="185.44" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Dynamic: 77.8" data-method="Qwen Code + Qwen3.8-Max" data-metric="Dynamic" data-value="77.8"/>
+                <text class="chart-value" x="354.00" y="200.56" text-anchor="middle">77.8</text>
+                <rect class="chart-bar" x="570.33" y="80.87" width="22" height="313.13" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Motion: 93.5" data-method="Qwen Code + Qwen3.8-Max" data-metric="Motion" data-value="93.5"/>
+                <text class="chart-value" x="581.33" y="72.87" text-anchor="middle">93.5</text>
+                <rect class="chart-bar" x="797.67" y="229.71" width="22" height="164.29" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Setting: 75.2" data-method="Qwen Code + Qwen3.8-Max" data-metric="Setting" data-value="75.2"/>
+                <text class="chart-value" x="808.67" y="221.71" text-anchor="middle">75.2</text>
+                <rect class="chart-bar" x="1025.00" y="346.83" width="22" height="47.17" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Inter.: 60.8" data-method="Qwen Code + Qwen3.8-Max" data-metric="Inter." data-value="60.8"/>
+                <text class="chart-value" x="1036.00" y="338.83" text-anchor="middle">60.8</text>
+                <rect class="chart-bar" x="1252.33" y="314.29" width="22" height="79.71" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Physics: 64.8" data-method="Qwen Code + Qwen3.8-Max" data-metric="Physics" data-value="64.8"/>
+                <text class="chart-value" x="1263.33" y="306.29" text-anchor="middle">64.8</text>
+              </g>
+              <g class="chart-series" data-series="3">
+                <rect class="chart-bar" x="141.67" y="326.49" width="22" height="67.51" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, IQ: 63.3" data-method="Codex + GPT-5.6 Sol" data-metric="IQ" data-value="63.3"/>
+                <text class="chart-value" x="152.67" y="318.49" text-anchor="middle">63.3</text>
+                <rect class="chart-bar" x="369.00" y="164.64" width="22" height="229.36" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Dynamic: 83.2" data-method="Codex + GPT-5.6 Sol" data-metric="Dynamic" data-value="83.2"/>
+                <text class="chart-value" x="380.00" y="156.64" text-anchor="middle">83.2</text>
+                <rect class="chart-bar" x="596.33" y="69.48" width="22" height="324.52" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Motion: 94.9" data-method="Codex + GPT-5.6 Sol" data-metric="Motion" data-value="94.9"/>
+                <text class="chart-value" x="607.33" y="61.48" text-anchor="middle">94.9</text>
+                <rect class="chart-bar" x="823.67" y="184.97" width="22" height="209.03" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Setting: 80.7" data-method="Codex + GPT-5.6 Sol" data-metric="Setting" data-value="80.7"/>
+                <text class="chart-value" x="834.67" y="176.97" text-anchor="middle">80.7</text>
+                <rect class="chart-bar" x="1051.00" y="289.89" width="22" height="104.11" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Inter.: 67.8" data-method="Codex + GPT-5.6 Sol" data-metric="Inter." data-value="67.8"/>
+                <text class="chart-value" x="1062.00" y="281.89" text-anchor="middle">67.8</text>
+                <rect class="chart-bar" x="1278.33" y="278.51" width="22" height="115.49" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Physics: 69.2" data-method="Codex + GPT-5.6 Sol" data-metric="Physics" data-value="69.2"/>
+                <text class="chart-value" x="1289.33" y="270.51" text-anchor="middle">69.2</text>
+              </g>
+              <g class="chart-series" data-series="4">
+                <rect class="chart-bar" x="167.67" y="324.05" width="22" height="69.95" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, IQ: 63.6" data-method="Claude Code + Opus 5" data-metric="IQ" data-value="63.6"/>
+                <text class="chart-value" x="178.67" y="316.05" text-anchor="middle">63.6</text>
+                <rect class="chart-bar" x="395.00" y="176.03" width="22" height="217.97" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Dynamic: 81.8" data-method="Claude Code + Opus 5" data-metric="Dynamic" data-value="81.8"/>
+                <text class="chart-value" x="406.00" y="168.03" text-anchor="middle">81.8</text>
+                <rect class="chart-bar" x="622.33" y="67.85" width="22" height="326.15" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Motion: 95.1" data-method="Claude Code + Opus 5" data-metric="Motion" data-value="95.1"/>
+                <text class="chart-value" x="633.33" y="59.85" text-anchor="middle">95.1</text>
+                <rect class="chart-bar" x="849.67" y="190.67" width="22" height="203.33" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Setting: 80.0" data-method="Claude Code + Opus 5" data-metric="Setting" data-value="80.0"/>
+                <text class="chart-value" x="860.67" y="182.67" text-anchor="middle">80.0</text>
+                <rect class="chart-bar" x="1077.00" y="304.53" width="22" height="89.47" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Inter.: 66.0" data-method="Claude Code + Opus 5" data-metric="Inter." data-value="66.0"/>
+                <text class="chart-value" x="1088.00" y="296.53" text-anchor="middle">66.0</text>
+                <rect class="chart-bar" x="1304.33" y="285.01" width="22" height="108.99" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Physics: 68.4" data-method="Claude Code + Opus 5" data-metric="Physics" data-value="68.4"/>
+                <text class="chart-value" x="1315.33" y="277.01" text-anchor="middle">68.4</text>
+              </g>
+              <g class="chart-series" data-series="5">
+                <rect class="chart-bar" x="193.67" y="318.36" width="22" height="75.64" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, IQ: 64.3" data-method="Ours + Qwen3.8-Max" data-metric="IQ" data-value="64.3"/>
+                <text class="chart-value is-ours" x="204.67" y="310.36" text-anchor="middle">64.3</text>
+                <rect class="chart-bar" x="421.00" y="151.63" width="22" height="242.37" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Dynamic: 84.8" data-method="Ours + Qwen3.8-Max" data-metric="Dynamic" data-value="84.8"/>
+                <text class="chart-value is-ours" x="432.00" y="143.63" text-anchor="middle">84.8</text>
+                <rect class="chart-bar" x="648.33" y="69.48" width="22" height="324.52" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Motion: 94.9" data-method="Ours + Qwen3.8-Max" data-metric="Motion" data-value="94.9"/>
+                <text class="chart-value is-ours" x="659.33" y="61.48" text-anchor="middle">94.9</text>
+                <rect class="chart-bar" x="875.67" y="165.45" width="22" height="228.55" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Setting: 83.1" data-method="Ours + Qwen3.8-Max" data-metric="Setting" data-value="83.1"/>
+                <text class="chart-value is-ours" x="886.67" y="157.45" text-anchor="middle">83.1</text>
+                <rect class="chart-bar" x="1103.00" y="267.12" width="22" height="126.88" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Inter.: 70.6" data-method="Ours + Qwen3.8-Max" data-metric="Inter." data-value="70.6"/>
+                <text class="chart-value is-ours" x="1114.00" y="259.12" text-anchor="middle">70.6</text>
+                <rect class="chart-bar" x="1330.33" y="269.56" width="22" height="124.44" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Physics: 70.3" data-method="Ours + Qwen3.8-Max" data-metric="Physics" data-value="70.3"/>
+                <text class="chart-value is-ours" x="1341.33" y="261.56" text-anchor="middle">70.3</text>
+              </g>
+              <g class="chart-series" data-series="6">
+                <rect class="chart-bar" x="219.67" y="309.41" width="22" height="84.59" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, IQ: 65.4" data-method="Ours + GPT-5.6 Sol" data-metric="IQ" data-value="65.4"/>
+                <text class="chart-value is-ours" x="230.67" y="301.41" text-anchor="middle">65.4</text>
+                <rect class="chart-bar" x="447.00" y="132.11" width="22" height="261.89" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Dynamic: 87.2" data-method="Ours + GPT-5.6 Sol" data-metric="Dynamic" data-value="87.2"/>
+                <text class="chart-value is-ours" x="458.00" y="124.11" text-anchor="middle">87.2</text>
+                <rect class="chart-bar" x="674.33" y="62.16" width="22" height="331.84" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Motion: 95.8" data-method="Ours + GPT-5.6 Sol" data-metric="Motion" data-value="95.8"/>
+                <text class="chart-value is-ours" x="685.33" y="54.16" text-anchor="middle">95.8</text>
+                <rect class="chart-bar" x="901.67" y="139.43" width="22" height="254.57" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Setting: 86.3" data-method="Ours + GPT-5.6 Sol" data-metric="Setting" data-value="86.3"/>
+                <text class="chart-value is-ours" x="912.67" y="131.43" text-anchor="middle">86.3</text>
+                <rect class="chart-bar" x="1129.00" y="221.57" width="22" height="172.43" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Inter.: 76.2" data-method="Ours + GPT-5.6 Sol" data-metric="Inter." data-value="76.2"/>
+                <text class="chart-value is-ours" x="1140.00" y="213.57" text-anchor="middle">76.2</text>
+                <rect class="chart-bar" x="1356.33" y="236.21" width="22" height="157.79" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Physics: 74.4" data-method="Ours + GPT-5.6 Sol" data-metric="Physics" data-value="74.4"/>
+                <text class="chart-value is-ours" x="1367.33" y="228.21" text-anchor="middle">74.4</text>
+              </g>
+              <g class="chart-series" data-series="7">
+                <rect class="chart-bar" x="245.67" y="303.72" width="22" height="90.28" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, IQ: 66.1" data-method="Ours + Claude Opus 5" data-metric="IQ" data-value="66.1"/>
+                <text class="chart-value is-ours" x="256.67" y="295.72" text-anchor="middle">66.1</text>
+                <rect class="chart-bar" x="473.00" y="123.97" width="22" height="270.03" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Dynamic: 88.2" data-method="Ours + Claude Opus 5" data-metric="Dynamic" data-value="88.2"/>
+                <text class="chart-value is-ours" x="484.00" y="115.97" text-anchor="middle">88.2</text>
+                <rect class="chart-bar" x="700.33" y="59.72" width="22" height="334.28" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Motion: 96.1" data-method="Ours + Claude Opus 5" data-metric="Motion" data-value="96.1"/>
+                <text class="chart-value is-ours" x="711.33" y="51.72" text-anchor="middle">96.1</text>
+                <rect class="chart-bar" x="927.67" y="129.67" width="22" height="264.33" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Setting: 87.5" data-method="Ours + Claude Opus 5" data-metric="Setting" data-value="87.5"/>
+                <text class="chart-value is-ours" x="938.67" y="121.67" text-anchor="middle">87.5</text>
+                <rect class="chart-bar" x="1155.00" y="224.83" width="22" height="169.17" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Inter.: 75.8" data-method="Ours + Claude Opus 5" data-metric="Inter." data-value="75.8"/>
+                <text class="chart-value is-ours" x="1166.00" y="216.83" text-anchor="middle">75.8</text>
+                <rect class="chart-bar" x="1382.33" y="240.28" width="22" height="153.72" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Physics: 73.9" data-method="Ours + Claude Opus 5" data-metric="Physics" data-value="73.9"/>
+                <text class="chart-value is-ours" x="1393.33" y="232.28" text-anchor="middle">73.9</text>
+              </g>
+              <text class="chart-metric" x="165.67" y="426" text-anchor="middle">IQ</text>
+              <text class="chart-metric" x="393.00" y="426" text-anchor="middle">Dynamic</text>
+              <text class="chart-metric" x="620.33" y="426" text-anchor="middle">Motion</text>
+              <text class="chart-metric" x="847.67" y="426" text-anchor="middle">Setting</text>
+              <text class="chart-metric" x="1075.00" y="426" text-anchor="middle">Inter.</text>
+              <text class="chart-metric" x="1302.33" y="426" text-anchor="middle">Physics</text>
+            </svg>
+          </div>
+        </figure>
+        <figure class="result-chart" id="playable-quality">
+          <figcaption id="playable-quality-title">Playable-Game Quality on GameCode4D</figcaption>
+          <div class="chart-meta"><span>Score ↑ <span class="chart-axis-range">· Axis: 25–85</span></span><span class="chart-scroll-hint">Scroll to compare →</span></div>
+          <ul class="chart-legend" aria-label="Methods">
+              <li data-series="0"><span class="chart-swatch" style="--series-color:#526c7c" aria-hidden="true"></span>OpenGame + Qwen3.8-Max</li>
+              <li data-series="1"><span class="chart-swatch" style="--series-color:#8b9cac" aria-hidden="true"></span>AutoUE + Qwen3.8-Max</li>
+              <li data-series="2"><span class="chart-swatch" style="--series-color:#607b90" aria-hidden="true"></span>Qwen Code + Qwen3.8-Max</li>
+              <li data-series="3"><span class="chart-swatch" style="--series-color:#8cabad" aria-hidden="true"></span>Codex + GPT-5.6 Sol</li>
+              <li data-series="4"><span class="chart-swatch" style="--series-color:#c0cbd1" aria-hidden="true"></span>Claude Code + Opus 5</li>
+              <li data-series="5" class="is-ours"><span class="chart-swatch" style="--series-color:#328e9e" aria-hidden="true"></span>Ours + Qwen3.8-Max</li>
+              <li data-series="6" class="is-ours"><span class="chart-swatch" style="--series-color:#08b9d6" aria-hidden="true"></span>Ours + GPT-5.6 Sol</li>
+              <li data-series="7" class="is-ours"><span class="chart-swatch" style="--series-color:#d7bb83" aria-hidden="true"></span>Ours + Claude Opus 5</li>
+          </ul>
+          <div class="chart-scroll" tabindex="0" role="region" aria-label="Playable-Game Quality on GameCode4D; scroll horizontally on smaller screens">
+            <svg class="result-plot" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 446" role="group" aria-labelledby="playable-quality-title playable-quality-description">
+              <desc id="playable-quality-description">Grouped bar chart comparing eight methods on GameCode4D. The score axis runs from 25 to 85. All scores are shown above their bars. Focus or hover over a bar to identify its method and score.</desc>
+              <g class="chart-tick"><line x1="52" y1="363.50" x2="1416" y2="363.50"/><text x="40" y="367.50" text-anchor="end">30</text></g>
+              <g class="chart-tick"><line x1="52" y1="302.50" x2="1416" y2="302.50"/><text x="40" y="306.50" text-anchor="end">40</text></g>
+              <g class="chart-tick"><line x1="52" y1="241.50" x2="1416" y2="241.50"/><text x="40" y="245.50" text-anchor="end">50</text></g>
+              <g class="chart-tick"><line x1="52" y1="180.50" x2="1416" y2="180.50"/><text x="40" y="184.50" text-anchor="end">60</text></g>
+              <g class="chart-tick"><line x1="52" y1="119.50" x2="1416" y2="119.50"/><text x="40" y="123.50" text-anchor="end">70</text></g>
+              <g class="chart-tick"><line x1="52" y1="58.50" x2="1416" y2="58.50"/><text x="40" y="62.50" text-anchor="end">80</text></g>
+              <line class="chart-baseline" x1="52" y1="394" x2="1416" y2="394"/>
+              <g class="chart-series" data-series="0">
+                <rect class="chart-bar" x="86.40" y="220.15" width="22" height="173.85" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, M: 53.5" data-method="OpenGame + Qwen3.8-Max" data-metric="M" data-value="53.5"/>
+                <text class="chart-value" x="97.40" y="212.15" text-anchor="middle">53.5</text>
+                <rect class="chart-bar" x="359.20" y="303.72" width="22" height="90.28" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, D: 39.8" data-method="OpenGame + Qwen3.8-Max" data-metric="D" data-value="39.8"/>
+                <text class="chart-value" x="370.20" y="295.72" text-anchor="middle">39.8</text>
+                <rect class="chart-bar" x="632.00" y="280.54" width="22" height="113.46" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, V: 43.6" data-method="OpenGame + Qwen3.8-Max" data-metric="V" data-value="43.6"/>
+                <text class="chart-value" x="643.00" y="272.54" text-anchor="middle">43.6</text>
+                <rect class="chart-bar" x="904.80" y="304.33" width="22" height="89.67" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, A: 39.7" data-method="OpenGame + Qwen3.8-Max" data-metric="A" data-value="39.7"/>
+                <text class="chart-value" x="915.80" y="296.33" text-anchor="middle">39.7</text>
+                <rect class="chart-bar" x="1177.60" y="175.62" width="22" height="218.38" rx="2" fill="#526c7c" tabindex="0" role="img" aria-label="OpenGame + Qwen3.8-Max, Human: 60.8" data-method="OpenGame + Qwen3.8-Max" data-metric="Human" data-value="60.8"/>
+                <text class="chart-value" x="1188.60" y="167.62" text-anchor="middle">60.8</text>
+              </g>
+              <g class="chart-series" data-series="1">
+                <rect class="chart-bar" x="112.40" y="214.05" width="22" height="179.95" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, M: 54.5" data-method="AutoUE + Qwen3.8-Max" data-metric="M" data-value="54.5"/>
+                <text class="chart-value" x="123.40" y="206.05" text-anchor="middle">54.5</text>
+                <rect class="chart-bar" x="385.20" y="309.21" width="22" height="84.79" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, D: 38.9" data-method="AutoUE + Qwen3.8-Max" data-metric="D" data-value="38.9"/>
+                <text class="chart-value" x="396.20" y="301.21" text-anchor="middle">38.9</text>
+                <rect class="chart-bar" x="658.00" y="276.27" width="22" height="117.73" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, V: 44.3" data-method="AutoUE + Qwen3.8-Max" data-metric="V" data-value="44.3"/>
+                <text class="chart-value" x="669.00" y="268.27" text-anchor="middle">44.3</text>
+                <rect class="chart-bar" x="930.80" y="308.60" width="22" height="85.40" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, A: 39.0" data-method="AutoUE + Qwen3.8-Max" data-metric="A" data-value="39.0"/>
+                <text class="chart-value" x="941.80" y="300.60" text-anchor="middle">39.0</text>
+                <rect class="chart-bar" x="1203.60" y="172.57" width="22" height="221.43" rx="2" fill="#8b9cac" tabindex="0" role="img" aria-label="AutoUE + Qwen3.8-Max, Human: 61.3" data-method="AutoUE + Qwen3.8-Max" data-metric="Human" data-value="61.3"/>
+                <text class="chart-value" x="1214.60" y="164.57" text-anchor="middle">61.3</text>
+              </g>
+              <g class="chart-series" data-series="2">
+                <rect class="chart-bar" x="138.40" y="281.15" width="22" height="112.85" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, M: 43.5" data-method="Qwen Code + Qwen3.8-Max" data-metric="M" data-value="43.5"/>
+                <text class="chart-value" x="149.40" y="273.15" text-anchor="middle">43.5</text>
+                <rect class="chart-bar" x="411.20" y="357.40" width="22" height="36.60" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, D: 31.0" data-method="Qwen Code + Qwen3.8-Max" data-metric="D" data-value="31.0"/>
+                <text class="chart-value" x="422.20" y="349.40" text-anchor="middle">31.0</text>
+                <rect class="chart-bar" x="684.00" y="328.12" width="22" height="65.88" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, V: 35.8" data-method="Qwen Code + Qwen3.8-Max" data-metric="V" data-value="35.8"/>
+                <text class="chart-value" x="695.00" y="320.12" text-anchor="middle">35.8</text>
+                <rect class="chart-bar" x="956.80" y="361.06" width="22" height="32.94" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, A: 30.4" data-method="Qwen Code + Qwen3.8-Max" data-metric="A" data-value="30.4"/>
+                <text class="chart-value" x="967.80" y="353.06" text-anchor="middle">30.4</text>
+                <rect class="chart-bar" x="1229.60" y="232.35" width="22" height="161.65" rx="2" fill="#607b90" tabindex="0" role="img" aria-label="Qwen Code + Qwen3.8-Max, Human: 51.5" data-method="Qwen Code + Qwen3.8-Max" data-metric="Human" data-value="51.5"/>
+                <text class="chart-value" x="1240.60" y="224.35" text-anchor="middle">51.5</text>
+              </g>
+              <g class="chart-series" data-series="3">
+                <rect class="chart-bar" x="164.40" y="192.09" width="22" height="201.91" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, M: 58.1" data-method="Codex + GPT-5.6 Sol" data-metric="M" data-value="58.1"/>
+                <text class="chart-value" x="175.40" y="184.09" text-anchor="middle">58.1</text>
+                <rect class="chart-bar" x="437.20" y="284.81" width="22" height="109.19" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, D: 42.9" data-method="Codex + GPT-5.6 Sol" data-metric="D" data-value="42.9"/>
+                <text class="chart-value" x="448.20" y="276.81" text-anchor="middle">42.9</text>
+                <rect class="chart-bar" x="710.00" y="269.56" width="22" height="124.44" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, V: 45.4" data-method="Codex + GPT-5.6 Sol" data-metric="V" data-value="45.4"/>
+                <text class="chart-value" x="721.00" y="261.56" text-anchor="middle">45.4</text>
+                <rect class="chart-bar" x="982.80" y="300.06" width="22" height="93.94" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, A: 40.4" data-method="Codex + GPT-5.6 Sol" data-metric="A" data-value="40.4"/>
+                <text class="chart-value" x="993.80" y="292.06" text-anchor="middle">40.4</text>
+                <rect class="chart-bar" x="1255.60" y="154.88" width="22" height="239.12" rx="2" fill="#8cabad" tabindex="0" role="img" aria-label="Codex + GPT-5.6 Sol, Human: 64.2" data-method="Codex + GPT-5.6 Sol" data-metric="Human" data-value="64.2"/>
+                <text class="chart-value" x="1266.60" y="146.88" text-anchor="middle">64.2</text>
+              </g>
+              <g class="chart-series" data-series="4">
+                <rect class="chart-bar" x="190.40" y="200.02" width="22" height="193.98" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, M: 56.8" data-method="Claude Code + Opus 5" data-metric="M" data-value="56.8"/>
+                <text class="chart-value" x="201.40" y="192.02" text-anchor="middle">56.8</text>
+                <rect class="chart-bar" x="463.20" y="289.08" width="22" height="104.92" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, D: 42.2" data-method="Claude Code + Opus 5" data-metric="D" data-value="42.2"/>
+                <text class="chart-value" x="474.20" y="281.08" text-anchor="middle">42.2</text>
+                <rect class="chart-bar" x="736.00" y="265.90" width="22" height="128.10" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, V: 46.0" data-method="Claude Code + Opus 5" data-metric="V" data-value="46.0"/>
+                <text class="chart-value" x="747.00" y="257.90" text-anchor="middle">46.0</text>
+                <rect class="chart-bar" x="1008.80" y="293.35" width="22" height="100.65" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, A: 41.5" data-method="Claude Code + Opus 5" data-metric="A" data-value="41.5"/>
+                <text class="chart-value" x="1019.80" y="285.35" text-anchor="middle">41.5</text>
+                <rect class="chart-bar" x="1281.60" y="157.32" width="22" height="236.68" rx="2" fill="#c0cbd1" tabindex="0" role="img" aria-label="Claude Code + Opus 5, Human: 63.8" data-method="Claude Code + Opus 5" data-metric="Human" data-value="63.8"/>
+                <text class="chart-value" x="1292.60" y="149.32" text-anchor="middle">63.8</text>
+              </g>
+              <g class="chart-series" data-series="5">
+                <rect class="chart-bar" x="216.40" y="191.48" width="22" height="202.52" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, M: 58.2" data-method="Ours + Qwen3.8-Max" data-metric="M" data-value="58.2"/>
+                <text class="chart-value is-ours" x="227.40" y="183.48" text-anchor="middle">58.2</text>
+                <rect class="chart-bar" x="489.20" y="265.90" width="22" height="128.10" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, D: 46.0" data-method="Ours + Qwen3.8-Max" data-metric="D" data-value="46.0"/>
+                <text class="chart-value is-ours" x="500.20" y="257.90" text-anchor="middle">46.0</text>
+                <rect class="chart-bar" x="762.00" y="232.35" width="22" height="161.65" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, V: 51.5" data-method="Ours + Qwen3.8-Max" data-metric="V" data-value="51.5"/>
+                <text class="chart-value is-ours" x="773.00" y="224.35" text-anchor="middle">51.5</text>
+                <rect class="chart-bar" x="1034.80" y="268.95" width="22" height="125.05" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, A: 45.5" data-method="Ours + Qwen3.8-Max" data-metric="A" data-value="45.5"/>
+                <text class="chart-value is-ours" x="1045.80" y="260.95" text-anchor="middle">45.5</text>
+                <rect class="chart-bar" x="1307.60" y="131.70" width="22" height="262.30" rx="2" fill="#328e9e" tabindex="0" role="img" aria-label="Ours + Qwen3.8-Max, Human: 68.0" data-method="Ours + Qwen3.8-Max" data-metric="Human" data-value="68.0"/>
+                <text class="chart-value is-ours" x="1318.60" y="123.70" text-anchor="middle">68.0</text>
+              </g>
+              <g class="chart-series" data-series="6">
+                <rect class="chart-bar" x="242.40" y="132.92" width="22" height="261.08" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, M: 67.8" data-method="Ours + GPT-5.6 Sol" data-metric="M" data-value="67.8"/>
+                <text class="chart-value is-ours" x="253.40" y="124.92" text-anchor="middle">67.8</text>
+                <rect class="chart-bar" x="515.20" y="212.22" width="22" height="181.78" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, D: 54.8" data-method="Ours + GPT-5.6 Sol" data-metric="D" data-value="54.8"/>
+                <text class="chart-value is-ours" x="526.20" y="204.22" text-anchor="middle">54.8</text>
+                <rect class="chart-bar" x="788.00" y="183.55" width="22" height="210.45" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, V: 59.5" data-method="Ours + GPT-5.6 Sol" data-metric="V" data-value="59.5"/>
+                <text class="chart-value is-ours" x="799.00" y="175.55" text-anchor="middle">59.5</text>
+                <rect class="chart-bar" x="1060.80" y="215.27" width="22" height="178.73" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, A: 54.3" data-method="Ours + GPT-5.6 Sol" data-metric="A" data-value="54.3"/>
+                <text class="chart-value is-ours" x="1071.80" y="207.27" text-anchor="middle">54.3</text>
+                <rect class="chart-bar" x="1333.60" y="85.95" width="22" height="308.05" rx="2" fill="#08b9d6" tabindex="0" role="img" aria-label="Ours + GPT-5.6 Sol, Human: 75.5" data-method="Ours + GPT-5.6 Sol" data-metric="Human" data-value="75.5"/>
+                <text class="chart-value is-ours" x="1344.60" y="77.95" text-anchor="middle">75.5</text>
+              </g>
+              <g class="chart-series" data-series="7">
+                <rect class="chart-bar" x="268.40" y="126.82" width="22" height="267.18" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, M: 68.8" data-method="Ours + Claude Opus 5" data-metric="M" data-value="68.8"/>
+                <text class="chart-value is-ours" x="279.40" y="118.82" text-anchor="middle">68.8</text>
+                <rect class="chart-bar" x="541.20" y="200.63" width="22" height="193.37" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, D: 56.7" data-method="Ours + Claude Opus 5" data-metric="D" data-value="56.7"/>
+                <text class="chart-value is-ours" x="552.20" y="192.63" text-anchor="middle">56.7</text>
+                <rect class="chart-bar" x="814.00" y="174.40" width="22" height="219.60" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, V: 61.0" data-method="Ours + Claude Opus 5" data-metric="V" data-value="61.0"/>
+                <text class="chart-value is-ours" x="825.00" y="166.40" text-anchor="middle">61.0</text>
+                <rect class="chart-bar" x="1086.80" y="198.80" width="22" height="195.20" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, A: 57.0" data-method="Ours + Claude Opus 5" data-metric="A" data-value="57.0"/>
+                <text class="chart-value is-ours" x="1097.80" y="190.80" text-anchor="middle">57.0</text>
+                <rect class="chart-bar" x="1359.60" y="73.75" width="22" height="320.25" rx="2" fill="#d7bb83" tabindex="0" role="img" aria-label="Ours + Claude Opus 5, Human: 77.5" data-method="Ours + Claude Opus 5" data-metric="Human" data-value="77.5"/>
+                <text class="chart-value is-ours" x="1370.60" y="65.75" text-anchor="middle">77.5</text>
+              </g>
+              <text class="chart-metric" x="188.40" y="426" text-anchor="middle">M</text>
+              <text class="chart-metric" x="461.20" y="426" text-anchor="middle">D</text>
+              <text class="chart-metric" x="734.00" y="426" text-anchor="middle">V</text>
+              <text class="chart-metric" x="1006.80" y="426" text-anchor="middle">A</text>
+              <text class="chart-metric" x="1279.60" y="426" text-anchor="middle">Human</text>
+            </svg>
+          </div>
+        </figure>
+        <div class="chart-tooltip" role="tooltip" hidden><strong class="chart-tooltip-method"></strong><span class="chart-tooltip-value"></span></div>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer container">
+    <span class="footer-name">Code2Games</span>
+    <a class="back-to-top" href="#top">Back to top <svg class="arrow-icon" aria-hidden="true"><use href="#icon-up"/></svg></a>
+  </footer>
+</body>
+</html>
