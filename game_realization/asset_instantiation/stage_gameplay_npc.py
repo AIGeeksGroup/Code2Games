@@ -1,9 +1,4 @@
-"""Import and place the gameplay NPC in the realized Blender world.
-
-This is part of gaming-world realization.  It deliberately does not create a
-route, animate world-space locomotion, create a camera, or render a video.
-Those presentation-only operations live in ``visual_showcase``.
-"""
+"""Import and place the gameplay NPC in the realized Blender world."""
 import argparse
 import json
 import math

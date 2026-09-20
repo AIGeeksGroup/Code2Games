@@ -6,6 +6,7 @@
 !/.gitignore
 !/README.md
 !/requirements.txt
+!/figure5_pipeline.png
 
 !/shared_representation/
 !/shared_representation/**
@@ -13,8 +14,8 @@
 !/scene_and_gameplay_planning/**
 !/game_realization/
 !/game_realization/**
-!/visual_showcase/
-!/visual_showcase/**
+!/gameplay_logic/
+!/gameplay_logic/**
 !/scripts/
 !/scripts/**
 **/__pycache__/

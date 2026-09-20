@@ -18,13 +18,13 @@ from staging_paths import get_demo_name, get_staging_root
 PROJECT_ROOT = os.path.abspath(os.environ.get("CODE2WORLDS_ROOT") or os.path.join(SCRIPT_DIR, ".."))
 STAGING_ROOT = get_staging_root(PROJECT_ROOT)
 SCENE_BLEND = os.path.join(STAGING_ROOT, "staged_scene.blend")
-SHOWCASE_ROUTE_JSON = os.path.join(STAGING_ROOT, "showcase_route", "showcase_route.json")
-OUTPUT_DIR = os.path.join(STAGING_ROOT, "visual_showcase")
+GAMEPLAY_PATH_JSON = os.path.join(STAGING_ROOT, "gameplay_path", "gameplay_path.json")
+OUTPUT_DIR = os.path.join(STAGING_ROOT, "gameplay_output")
 FRAME_DIR = os.path.join(OUTPUT_DIR, "frames")
-OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "visual_showcase.blend")
-OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "visual_showcase_report.json")
-OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "visual_showcase.mp4")
-COLLECTION_NAME = "Code2Games_Visual_Showcase"
+OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "gaming_world.blend")
+OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "gameplay_report.json")
+OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "gameplay.mp4")
+COLLECTION_NAME = "Code2Games_Gameplay"
 NPC_ROOT_MARKER = "code2games_gameplay_npc_root"
 UP = mathutils.Vector((0.0, 0.0, 1.0))
 FPS = 24
@@ -34,9 +34,9 @@ FRAME_END = 192
 
 def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
-    parser = argparse.ArgumentParser(description="Animate the staged NPC and create an optional visual showcase")
+    parser = argparse.ArgumentParser(description="Stage gameplay motion, follow camera, and video")
     parser.add_argument("--scene_blend", default=SCENE_BLEND)
-    parser.add_argument("--showcase_route", default=SHOWCASE_ROUTE_JSON)
+    parser.add_argument("--gameplay_path", default=GAMEPLAY_PATH_JSON)
     parser.add_argument("--output_dir", default=OUTPUT_DIR)
     parser.add_argument("--npc_object", default="", help="optional name of a pre-staged NPC root")
     parser.add_argument("--npc_height_m", type=float, default=None)
@@ -85,7 +85,7 @@ def clear_old_preview_frames():
     if not os.path.isdir(FRAME_DIR):
         return
     for name in os.listdir(FRAME_DIR):
-        if name.startswith("visual_showcase_frame_") and name.lower().endswith(".png"):
+        if name.startswith("gameplay_frame_") and name.lower().endswith(".png"):
             os.remove(os.path.join(FRAME_DIR, name))
 
 
@@ -221,12 +221,7 @@ def get_or_reset_collection(name=COLLECTION_NAME):
 
 
 def find_staged_npc(object_name=""):
-    """Return the NPC already embedded in the gaming-world Blend.
-
-    NPC import and static placement belong to game realization.  The visual
-    showcase must never silently create a second character or alter the
-    gaming-world contract.
-    """
+    """Return the NPC embedded by the preceding pipeline step."""
     if object_name:
         obj = bpy.data.objects.get(object_name)
         if obj is None:
@@ -339,7 +334,7 @@ def frame_for_beat(index, beat_count):
 def parse_beats(path_data):
     beats = path_data.get("beats")
     if not isinstance(beats, list) or len(beats) < 2:
-        raise ValueError("showcase_route.json must contain at least two beats")
+        raise ValueError("gameplay_path.json must contain at least two beats")
     parsed = []
     for beat in beats:
         parsed.append({
@@ -1903,7 +1898,7 @@ def render_frame_previews(camera):
         FRAME_END,
     })
     for frame in preview_frames:
-        path = os.path.join(FRAME_DIR, f"visual_showcase_frame_{frame:04d}.png")
+        path = os.path.join(FRAME_DIR, f"gameplay_frame_{frame:04d}.png")
         bpy.context.scene.frame_set(frame)
         configure_render_for_stills(path, camera)
         log("RENDER_GAMEPLAY_FRAME", path)
@@ -1937,22 +1932,22 @@ def configure_render_for_video(video_samples):
 
 def render_video(video_samples):
     configure_render_for_video(video_samples)
-    log("RENDER_VISUAL_SHOWCASE", OUTPUT_MP4)
+    log("RENDER_GAMEPLAY_VIDEO", OUTPUT_MP4)
     bpy.ops.render.render(animation=True)
 
 
 def main():
-    global SCENE_BLEND, SHOWCASE_ROUTE_JSON, OUTPUT_DIR, FRAME_DIR
+    global SCENE_BLEND, GAMEPLAY_PATH_JSON, OUTPUT_DIR, FRAME_DIR
     global OUTPUT_BLEND, OUTPUT_REPORT, OUTPUT_MP4, FPS, FRAME_START, FRAME_END
 
     args = parse_args()
     SCENE_BLEND = project_path(args.scene_blend)
-    SHOWCASE_ROUTE_JSON = project_path(args.showcase_route)
+    GAMEPLAY_PATH_JSON = project_path(args.gameplay_path)
     OUTPUT_DIR = project_path(args.output_dir)
     FRAME_DIR = os.path.join(OUTPUT_DIR, "frames")
-    OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "visual_showcase.blend")
-    OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "visual_showcase_report.json")
-    OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "visual_showcase.mp4")
+    OUTPUT_BLEND = os.path.join(OUTPUT_DIR, "gaming_world.blend")
+    OUTPUT_REPORT = os.path.join(OUTPUT_DIR, "gameplay_report.json")
+    OUTPUT_MP4 = os.path.join(OUTPUT_DIR, "gameplay.mp4")
     if min(
         args.actor_radius_m, args.maximum_ground_step_m, args.maximum_slope_degrees,
         args.maximum_collision_detour_m,
@@ -1966,18 +1961,18 @@ def main():
         "ok": False,
         "demo_name": get_demo_name() or None,
         "scene_blend": SCENE_BLEND,
-        "showcase_route_json": SHOWCASE_ROUTE_JSON,
+        "gameplay_path_json": GAMEPLAY_PATH_JSON,
         "output_dir": OUTPUT_DIR,
     }
     try:
         open_status = maybe_open_source_blend()
-        if not os.path.exists(SHOWCASE_ROUTE_JSON):
-            raise FileNotFoundError(f"showcase route not found: {SHOWCASE_ROUTE_JSON}")
-        showcase_route = load_json(SHOWCASE_ROUTE_JSON)
-        FPS = int(showcase_route.get("fps", FPS))
-        FRAME_START = int(showcase_route.get("frame_start", FRAME_START))
-        FRAME_END = int(showcase_route.get("frame_end", FRAME_END))
-        beats = parse_beats(showcase_route)
+        if not os.path.exists(GAMEPLAY_PATH_JSON):
+            raise FileNotFoundError(f"gameplay path not found: {GAMEPLAY_PATH_JSON}")
+        gameplay_path = load_json(GAMEPLAY_PATH_JSON)
+        FPS = int(gameplay_path.get("fps", FPS))
+        FRAME_START = int(gameplay_path.get("frame_start", FRAME_START))
+        FRAME_END = int(gameplay_path.get("frame_end", FRAME_END))
+        beats = parse_beats(gameplay_path)
         asset_contact_corrections = settle_grounded_gameplay_assets(args.ground_clearance_m)
         interaction_standoff_report = apply_interaction_standoffs(beats)
         terrain_report = sample_beats_to_terrain(
@@ -1999,7 +1994,7 @@ def main():
             ground_clearance=args.ground_clearance_m,
         )
         collision_report["arc_detours"] = arc_detour_report
-        runtime_motion_report = retime_runtime_route(beats, showcase_route, FPS)
+        runtime_motion_report = retime_runtime_route(beats, gameplay_path, FPS)
         FRAME_END = int(runtime_motion_report["frame_end"])
         bpy.context.scene.frame_start = FRAME_START
         bpy.context.scene.frame_end = FRAME_END
@@ -2077,7 +2072,7 @@ def main():
             "runtime_motion_validation": runtime_motion_report,
             "event_count": len(event_objects),
             "character_object": character.name,
-            "character_source": "pre_staged_gaming_world",
+            "character_source": "gaming_world_pipeline",
             "character_fbx": character.get("source_fbx"),
             "character_height_m": npc_height_m,
             "character_ground_clearance_m": float(args.ground_clearance_m),
@@ -2097,26 +2092,26 @@ def main():
             "render_video": bool(args.render_video),
             "video_samples": int(args.video_samples) if args.render_video else None,
         })
-        log("VISUAL_SHOWCASE_BLEND", OUTPUT_BLEND)
-        log("VISUAL_SHOWCASE_REPORT", OUTPUT_REPORT)
-        log("VISUAL_SHOWCASE_RENDER_ENGINE", bpy.context.scene.render.engine)
+        log("GAMING_WORLD_BLEND", OUTPUT_BLEND)
+        log("GAMEPLAY_REPORT", OUTPUT_REPORT)
+        log("GAMEPLAY_RENDER_ENGINE", bpy.context.scene.render.engine)
         if args.render_video:
-            log("VISUAL_SHOWCASE_MP4", OUTPUT_MP4)
-        log("VISUAL_SHOWCASE_BEAT_COUNT", len(beats))
+            log("GAMEPLAY_MP4", OUTPUT_MP4)
+        log("GAMEPLAY_BEAT_COUNT", len(beats))
     except Exception as exc:
         report.update({
             "ok": False,
             "error": str(exc),
             "traceback": traceback.format_exc(),
         })
-        log("VISUAL_SHOWCASE_ERROR", exc)
+        log("GAMEPLAY_ERROR", exc)
         log(traceback.format_exc())
         error = exc
     else:
         error = None
     finally:
         write_json(OUTPUT_REPORT, report)
-        log("VISUAL_SHOWCASE_REPORT", OUTPUT_REPORT)
+        log("GAMEPLAY_REPORT", OUTPUT_REPORT)
     if error is not None:
         raise error
 

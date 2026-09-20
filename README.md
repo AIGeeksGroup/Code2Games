@@ -16,24 +16,9 @@ https://github.com/user-attachments/assets/d9be6a46-b422-4737-97f0-e9eda0694fb6
 
 ## Overview
 
-Code2Games turns a natural-language game intent and a corresponding Code2Worlds Blender scene into a scene-grounded gaming world. The current repository contains the Blender-side pipeline for scene analysis, gameplay planning, constrained element placement, asset generation, world realization, NPC placement, and an optional visual-showcase stage.
+Code2Games transforms a natural-language game intent and a Code2Worlds scene into a complete gaming world and gameplay video through a unified agent pipeline.
 
-The workflow is separated into two stages:
-
-1. **Gaming-world generation:** generate gameplay rules and assets, place the NPC, and save the complete world as `staged_scene.blend`.
-2. **Visual showcase (optional):** select a physically continuous presentation route, animate the NPC already present in the world, create a follow camera, and render an MP4.
-
-```text
-Code2Worlds scene.blend + game intent + animated NPC FBX
-    -> scene and gameplay planning
-    -> scene-constrained element placement
-    -> asset realization and generation
-    -> NPC placement
-    -> staged_scene.blend (gaming world, including NPC)
-    -> [optional] showcase route + follow camera + video
-```
-
-`staged_scene.blend` is the primary Blender gaming-world artifact and already contains the statically placed NPC. Route animation, the follow camera, and video rendering are presentation-only additions saved to a separate showcase Blend; they do not overwrite the gaming world.
+![Overview of the Code2Games pipeline](figure5_pipeline.png)
 
 ## Repository Structure
 
@@ -44,10 +29,9 @@ Code2Games/
 ├── game_realization/
 │   ├── element_placement/          # Candidate extraction and semantic selection
 │   └── asset_instantiation/        # Asset generation, NPC placement, and Blender staging
-├── visual_showcase/                # Optional route, follow camera, and video rendering
+├── gameplay_logic/                 # Gameplay path, motion, follow camera, and rendering
 ├── scripts/
-│   ├── generate_gaming_world.sh    # scene.blend + NPC -> staged_scene.blend
-│   └── generate_visual_showcase.sh # staged_scene.blend -> showcase Blend/MP4
+│   └── generate_gaming_world.sh    # Complete gaming-world pipeline
 └── requirements.txt
 ```
 
@@ -145,16 +129,19 @@ bash scripts/generate_gaming_world.sh \
 Arguments are:
 
 ```text
-generate_gaming_world.sh <scene.blend> <game-intent prompt> <animated-npc.fbx> [run-name]
+generate_gaming_world.sh <scene.blend> <game-intent prompt> <animated-npc.fbx> [game-name]
 ```
 
-The optional run name isolates outputs from different games. The script performs scene understanding, gameplay planning, constrained placement, asset generation and instantiation, then places the NPC at a semantic spawn anchor. The primary result is:
+The optional game name isolates outputs from different games. The final outputs are:
 
 ```text
-output/game_staging/monster_hunt/staged_scene.blend
+output/game_staging/monster_hunt/gameplay_output/gaming_world.blend
+output/game_staging/monster_hunt/gameplay_output/gameplay.mp4
 ```
 
-This Blend is the gaming world. It contains the environment, generated gameplay elements, logical regions, and the statically placed NPC, but no showcase route or follow camera. Without a run name, outputs are written directly under `output/game_staging/`.
+If no game name is provided, outputs are written directly under `output/game_staging/`.
+
+All game assets are represented in GLB format.
 
 Existing generated GLBs can be reused:
 
@@ -162,53 +149,25 @@ Existing generated GLBs can be reused:
 export CODE2GAMES_SKIP_EXISTING_ASSETS=1
 ```
 
-### 5. Generate an Optional Visual Showcase
-
-After the gaming world exists, generate a route, NPC locomotion, follow camera, and video without importing another character:
-
-```bash
-bash scripts/generate_visual_showcase.sh "generic" "monster_hunt"
-```
-
-Arguments are:
-
-```text
-generate_visual_showcase.sh [genre] [run-name]
-```
-
-Supported route profiles are `generic`, `fps`, `tps`, `racing`, and `wingsuit`. The run name must match the one passed to `generate_gaming_world.sh`.
-
-The optional presentation outputs are:
-
-```text
-output/game_staging/monster_hunt/showcase_route/showcase_route.json
-output/game_staging/monster_hunt/visual_showcase/visual_showcase.blend
-output/game_staging/monster_hunt/visual_showcase/visual_showcase.mp4
-```
-
-The showcase executor resamples the route against the actual Blender terrain, resolves local collisions, keeps actor turns continuous, synchronizes animation to traveled distance, and searches for follow-camera positions that avoid terrain and scene occlusion. It reads the NPC already embedded in `staged_scene.blend` and never overwrites that source world.
-
 ## Output Layout
 
 ```text
-output/game_staging/<run-name>/
+output/game_staging/<game-name>/
 ├── default_camera_packet/          # Scene analysis, rules, candidates, and placement plan
 ├── asset_realization/              # Asset plan and LLM response
 ├── asset_generation/               # Reference images, logs, and generation manifest
 ├── asset_placement/                # Placement reports and validation previews
 ├── npc_staging/                    # NPC placement report
-├── staged_scene.blend              # Gaming world, including the placed NPC
-├── showcase_route/                 # Optional physical presentation route
-└── visual_showcase/                # Optional animated NPC/camera Blend and MP4
+├── staged_scene.blend              # Pipeline scene after asset and NPC staging
+├── gameplay_path/                  # Physics-aware gameplay path
+└── gameplay_output/                # Final gaming_world.blend and gameplay.mp4
 ```
 
 Generated GLBs are stored under:
 
 ```text
-assets/generated_glb/<run-name>/
+assets/generated_glb/<game-name>/
 ```
-
-Each stage validates its required input artifact before the next stage begins. If the pipeline stops, inspect the corresponding JSON report under `output/game_staging/<run-name>/` and rerun after correcting the failed dependency.
 
 ## Acknowledgement
 
