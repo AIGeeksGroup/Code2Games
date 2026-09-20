@@ -188,22 +188,6 @@ output/game_staging/monster_hunt/visual_showcase/visual_showcase.mp4
 
 The showcase executor resamples the route against the actual Blender terrain, resolves local collisions, keeps actor turns continuous, synchronizes animation to traveled distance, and searches for follow-camera positions that avoid terrain and scene occlusion. It reads the NPC already embedded in `staged_scene.blend` and never overwrites that source world.
 
-## Useful Environment Variables
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `CODE2GAMES_DEMO_NAME` | Isolates one run under `output/game_staging/<name>/` | empty |
-| `CODE2GAMES_DURATION_SECONDS` | Target gameplay-plan duration | `30` |
-| `CODE2GAMES_SKIP_EXISTING_ASSETS` | Reuse valid generated GLBs when set to `1` | `0` |
-| `CODE2GAMES_NPC_HEIGHT_M` | Height used while placing the NPC in the gaming world | `1.7` |
-| `CODE2GAMES_NPC_YAW_OFFSET_DEGREES` | Corrects the imported model's forward axis | `90` |
-| `BLENDER_BIN` | Blender executable | `blender` |
-| `PYTHON_BIN` | Python executable | `python` |
-| `HUNYUAN_BACKEND` | `gradio` or `local` | `gradio` |
-| `HUNYUAN_SERVER` | Hunyuan3D Gradio endpoint | `http://127.0.0.1:8080` |
-| `CODE2GAMES_RENDER_PREVIEWS` | Render showcase preview frames when set to `1` | `0` |
-| `CODE2GAMES_ADD_EVENTS` | Add optional showcase VFX when set to `1` | `0` |
-
 ## Output Layout
 
 ```text
