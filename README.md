@@ -10,7 +10,7 @@ This is the official repository for the paper:
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author.
 >
-> ### [Paper](http://arxiv.org/abs/2610.05033) | [Website](https://aigeeksgroup.github.io/Code2Games)| [GameCode4D](https://huggingface.co/datasets/AIGeeksGroup/GameCode4D)
+> ### [Paper](http://arxiv.org/abs/2610.05033) | [Website](https://aigeeksgroup.github.io/Code2Games) | [GameCode4D](https://huggingface.co/datasets/AIGeeksGroup/GameCode4D)
 
 https://github.com/user-attachments/assets/d9be6a46-b422-4737-97f0-e9eda0694fb6
 
