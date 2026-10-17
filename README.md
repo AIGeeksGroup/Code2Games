@@ -169,6 +169,20 @@ Generated GLBs are stored under:
 assets/generated_glb/<game-name>/
 ```
 
+## Star History
+
+<div align="center">
+
+<a href="https://www.star-history.com/?repos=AIGeeksGroup/Code2Games&type=date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=AIGeeksGroup/Code2Games&type=date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=AIGeeksGroup/Code2Games&type=date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=AIGeeksGroup/Code2Games&type=date" width="750" />
+  </picture>
+</a>
+
+</div>
+
 ## Acknowledgement
 
 We thank the authors of [Code2Worlds](https://github.com/AIGeeksGroup/Code2Worlds), [Infinigen](https://github.com/princeton-vl/infinigen), [Hunyuan3D](https://github.com/Tencent-Hunyuan/Hunyuan3D-2.1), Blender, Adobe Mixamo, and the creators of the 3D assets used by this project.
